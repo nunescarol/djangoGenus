@@ -35,6 +35,26 @@ def criar(request):
         return redirect('/homepage')
 
 def buscar_cursos(request):
-    cursos = Course.objects.all
-    cursos_dict = {'cursos': cursos}
-    return render(request, 'buscarCursos.html', cursos_dict)
+    if request.user.is_authenticated:
+        cursos = Course.objects.all
+        cursos_dict = {'cursos': cursos}
+        return render(request, 'buscarCursos.html', cursos_dict)
+    else:
+        return redirect('/homepage')
+
+def resumo(request, curso_id):
+    try:
+        c= Course.objects.get(pk=curso_id)
+    except Course.DoesNotExist:
+        raise Http404("Encontramos um erro")
+    return render(request, 'resumoCurso.html', {'curso':c})
+
+
+    # if request.user.is_authenticated:
+    #     curso = Course.objects.filter(title=curso_title)
+    #     cursos_dict = {'curso_selecionado': curso}
+    #     for cursos in curso_selecionado:
+    #         print(cursos)
+    #     return render(request, 'resumoCurso.html', {'curso_selecionado':curso})
+    # else:
+    #     return redirect('/homepage')

@@ -7,4 +7,5 @@ urlpatterns = [
     path('',views.perfil, name='perfil'),
     path('criar/',views.criar, name='criar-curso'),
     path('cursos/',views.buscar_cursos, name='buscar-cursos'),
+    path('<int:curso_id>/resumo',views.resumo, name='resumo'),
 ]

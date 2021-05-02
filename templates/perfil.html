@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul class="menu">
+        <li>Perfil</li>
+        <li>Configurações</li>
+        <li><a href="{% url 'cursos:buscar-cursos' %}">Buscar cursos</a></li>
+        <li><a href="{% url 'registro:logout' %}">Sair</a></li>
+    </ul>
+
+    <div class="cursos">
+        <h1>Cursos:</h1>
+        <h3>Cursos dos quais você é done</h3>
+        <ul class="professor">
+            {% for curso in dono %}
+            <li>{{curso.title}}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Cursos nos quais você está matriculade</h3>
+        <ul class="aluno">
+
+        </ul>
+    </div>
+
+    <div class="buttons">
+        <a href="{% url 'cursos:criar-curso' %}">Criar curso</a>
+        <button id="adicionar">Adicionar curso com código</button>
+
+    </div>
+
+</body>
+</html>

@@ -62,7 +62,7 @@ class Post(Module):
 
 class Activity(Module):
     module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
-    grade = models.FloatField(blank=True)
+    grade = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.title

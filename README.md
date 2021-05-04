@@ -9,3 +9,5 @@ estudo de django para aplicação no projeto Genus (sistemas distribuídos)
 - Resumo do curso
 - Criação de módulos
 - Mural e página com os módulos do curso
+- Criação de atividades
+- Exibição de atividades na página do módulo

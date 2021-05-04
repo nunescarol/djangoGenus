@@ -2,12 +2,13 @@ from django.http import Http404
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import CreateCourseForm, CreateModuleForm, CreateActivityForm
+from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm
 from django.utils.text import slugify
-from .models import Course, Module, Content
+from .models import Course, Module, Content, Activity, Post
 from django.urls import path, reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.apps import apps
+from django.db.models import Q
 
 
 def inicio(request):
@@ -75,14 +76,18 @@ def modulos(request, curso_slug):
     if request.user.is_authenticated:
         try:
             c= Course.objects.get(slug=curso_slug)
-            m=Module.objects.filter(course=c)
+            m= Module.objects.filter(course=c)
+            m= m.filter( Q(not_instance_of=Activity) )
+            a = Activity.objects.filter(module__in=m)
         except Course.DoesNotExist:
             raise Http404("Encontramos um erro")
         except Module.DoesNotExist:
             m=None
+        except Activity.DoesNotExist:
+            a=None
         if(request.user==c.owner):
             dono=True
-        return render(request, 'modulosCurso.html', {'curso':c, 'dono': dono, 'modulos': m})
+        return render(request, 'modulosCurso.html', {'curso':c, 'dono': dono, 'modulos': m, 'atividades': a})
     else:
         return redirect('/')
 
@@ -129,6 +134,7 @@ def exibir_modulo(request, curso_slug, modulo_id):
         try:
             c= Course.objects.get(slug=curso_slug)
             m= Module.objects.get(pk=modulo_id)
+            ap = Module.objects.filter(Q(Activity___module = m) | Q(Post___module = m))
         except Course.DoesNotExist:
             raise Http404("Ops, esse curso não existe")
         except Course.DoesNotExist:
@@ -136,50 +142,50 @@ def exibir_modulo(request, curso_slug, modulo_id):
         
         if request.user==c.owner:
             dono=True
-        
-        return render(request, 'modulo.html', {'curso':c, 'dono': dono, 'modulo': m})
+        return render(request, 'modulo.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividades_posts':ap})
 
     else:
         return redirect('/')
 
-# def criar_atividade(request, curso_slug, modulo_id):
-#     if request.user.is_authenticated:
-#         dono=False
+def criar_atividade(request, curso_slug, modulo_id):
+    dono=False
+    try:
+        c= Course.objects.get(slug=curso_slug)
+        m= Module.objects.get(pk=modulo_id)
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse curso não existe")
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse módulo não existe")
+    if(request.user==c.owner):
+            dono=True
+    if request.user.is_authenticated:
+        if dono:
+            if request.method == 'POST':
+                form = CreateActivityForm(request.POST)
+                if form.is_valid():
+                    record = form.save(commit=False)
+                    record.course=c
+                    record.module=m
+                    form.save()
+                    # owner = request.user
+                    # subject = form.cleaned_data.get('subject')
+                    # title = form.cleaned_data.get('title')
+                    # overview = form.cleaned_data.get('overview')
+                    # slug = slugify(form.cleaned_data.get('title'))
 
-#         try:
-#             c= Course.objects.get(slug=curso_slug)
-#             m= Module.objects.get(pk=modulo_id)
-#         except Course.DoesNotExist:
-#             raise Http404("Ops, esse curso não existe")
-#         except Course.DoesNotExist:
-#             raise Http404("Ops, esse módulo não existe")
-        
-#         if(request.user==c.owner):
-#             dono=True
-
-#         if request.method == 'POST':
-#                 form = CreateActivityForm(request.POST)
-#                 if form.is_valid():
-#                     print(form.cleaned_data)
-#                     # record = form.save(commit=False)
-#                     # record.course=c
-#                     # form.save()
-#                     # owner = request.user
-#                     # subject = form.cleaned_data.get('subject')
-#                     # title = form.cleaned_data.get('title')
-#                     # overview = form.cleaned_data.get('overview')
-#                     # slug = slugify(form.cleaned_data.get('title'))
-
-#                     # curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
-#                     # curso.save()
+                    # curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
+                    # curso.save()
                     
-#                     return redirect('/genus/'+curso_slug+'/modulos/')
-#         else:
-#             form = CreateActivityForm()
-#             return render(request, 'createActivity.html', {'form': form})
+                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
+            else:
 
-#     else:
-#         return redirect('/')
+                form = CreateActivityForm()
+            return render(request, 'createActivity.html', {'form': form})
+        else:
+            print("opaopa")
+            return redirect('/genus/inicio/')
+    else:
+        return redirect('/')
 
 # def criar_post(request, curso_slug, modulo_id):
 #     if request.user.is_authenticated:

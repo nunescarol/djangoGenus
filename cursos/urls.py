@@ -13,5 +13,5 @@ urlpatterns = [
     path('<str:curso_slug>/modulos/',views.modulos, name='modulos'), 
     path('<str:curso_slug>/<int:modulo_id>/',views.exibir_modulo, name='exibir-modulo'),
     path('<str:curso_slug>/<int:modulo_id>/criar-atividade/',views.criar_atividade, name='criar-atividade'),
-    path('<str:curso_slug>/<int:modulo_id>/criar-post/',views.criar_post, name='criar-post'),  
+    # path('<str:curso_slug>/<int:modulo_id>/criar-post/',views.criar_post, name='criar-post'),  
 ]

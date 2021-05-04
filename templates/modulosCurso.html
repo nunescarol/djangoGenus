@@ -27,7 +27,15 @@
         <div class="content-container">
             <ul>
                 {% for modulo in modulos %}
-                <li><a href="{% url 'cursos:exibir-modulo' curso.slug modulo.id %}">{{modulo.title}}</a></li>
+                <li><a href="{% url 'cursos:exibir-modulo' curso.slug modulo.id %}">{{modulo.title}}</a>
+                    {% for atividade in atividades %}
+                        {% if atividade.module == modulo %}
+                            <ul>
+                                <li>{{atividade}}</li>
+                            </ul>
+                        {% endif %} 
+                    {% endfor %}
+                </li>
                 {% endfor %}
             </ul>
         

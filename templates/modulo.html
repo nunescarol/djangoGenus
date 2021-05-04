@@ -22,11 +22,13 @@
     <section>
         <h1>{{modulo.title}}</h1>
         <hr>
+        <p>{{modulo.description}}</p>
+        <hr>
         {% if dono %}
             <div class="dropdown">
                 <button class="dropbtn">Adicionar conteúdo</button>
                 <div class="dropdown-content">
-                    <a href="#">Atividade</a>
+                    <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
                     <a href="#">Post</a>
                 </div>
             </div>
@@ -35,8 +37,9 @@
         
         <div class="content-container">
             <ul>
-                <li>Atividade 1</li>
-                <li>Post 2</li>
+                {% for ap in atividades_posts %}
+                    <li>{{ap}}</li>
+                {% endfor %}
             </ul>
         
         </div>

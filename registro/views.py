@@ -6,7 +6,7 @@ from django.contrib import messages
 
 def cadastro(request):
     if request.user.is_authenticated:
-        return redirect('/perfil')
+        return redirect('/genus/inicio')
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -15,21 +15,21 @@ def cadastro(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('/perfil')
+            return redirect('/genus/inicio')
     else:
         form = RegistrationForm()
     return render(request, 'cadastro.html', {'form': form})
 
 def user_login(request):
     if request.user.is_authenticated:
-        return redirect('/perfil')
+        return redirect('/genus/inicio')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/perfil')
+            return redirect('/genus/inicio')
         else:
             messages.info(request,'Nome de usuário ou senha incorretas')
             return render(request,'login.html')

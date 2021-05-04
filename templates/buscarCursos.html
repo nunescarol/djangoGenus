@@ -9,7 +9,7 @@
     <h1>Cursos disponíveis</h1>
     <ul class="cursos-query">
         {% for curso in cursos %}
-        <li><a href="{% url 'cursos:resumo' curso.id %}">{{curso.title}}</a></li>
+        <li><a href="{% url 'cursos:resumo' curso.slug %}">{{curso.title}}</a></li>
         {% endfor %}
     </ul>
 </body>

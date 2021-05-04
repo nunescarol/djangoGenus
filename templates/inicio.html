@@ -18,7 +18,7 @@
         <h3>Cursos dos quais você é done</h3>
         <ul class="professor">
             {% for curso in dono %}
-            <li>{{curso.title}}</li>
+            <li><a href="{% url 'cursos:curso' curso.slug%}">{{curso.title}}</a></li>
             {% endfor %}
         </ul>
 

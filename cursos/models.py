@@ -5,6 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from polymorphic.models import PolymorphicModel
 
+from .fields import OrderField
+
 User._meta.get_field('email')._unique = True
 User._meta.get_field('email').blank = False
 User._meta.get_field('email').null = False
@@ -37,42 +39,62 @@ class Module(PolymorphicModel):
     course = models.ForeignKey(Course, related_name='modules', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    # order = OrderField(blank=True, for_fields=['course'])
+
+    def __str__(self):
+        return self.title
+
+    # def __str__(self):
+    #     return '{}. {}'.format(self.order, self.title)
+    
+    class Meta:
+        ordering = ('-created',)
+
+    # class Meta:
+    #     ordering = ['order']
+
+class Post(Module):
+    module = models.ForeignKey(Module,related_name='posts', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
 class Activity(Module):
+    module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
     grade = models.FloatField(blank=True)
 
     def __str__(self):
         return self.title
 
-# class Content(models.Model):
-#     module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
-#     content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in':('text', 'video', 'image', 'file')}, on_delete=models.DO_NOTHING)
-#     object_id = models.PositiveIntegerField()
-#     item = GenericForeignKey('content_type', 'object_id')
 
-# class ItemBase(models.Model):
-#     owner = models.ForeignKey(User,related_name='%(class)s_related', on_delete=models.DO_NOTHING)
-#     title = models.CharField(max_length=250)
-#     created = models.DateTimeField(auto_now_add=True)
-#     updated = models.DateTimeField(auto_now=True)
+class Content(models.Model):
+    module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in':('text', 'video', 'image', 'file')}, on_delete=models.DO_NOTHING)
+    object_id = models.PositiveIntegerField()
+    item = GenericForeignKey('content_type', 'object_id')
+
+
+class ItemBase(models.Model):
+    owner = models.ForeignKey(User,related_name='%(class)s_related', on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=250)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
-#     class Meta:
-#         abstract = True
+    class Meta:
+        abstract = True
     
-#     def __str__(self):
-#         return self.title
+    def __str__(self):
+        return self.title
 
-# class Text(ItemBase):
-#     content = models.TextField()
+class Text(ItemBase):
+    content = models.TextField()
 
-# class File(ItemBase):
-#     file = models.FileField(upload_to='files')
+class File(ItemBase):
+    file = models.FileField(upload_to='files')
 
-# class Image(ItemBase):
-#     file = models.FileField(upload_to='images')
+class Image(ItemBase):
+    file = models.FileField(upload_to='images')
 
-# class Video(ItemBase):
-#     url = models.URLField()
+class Video(ItemBase):
+    url = models.URLField()

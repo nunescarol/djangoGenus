@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genus</title>
+</head>
+<body>
+    <h1>{{curso.title}}</h1>
+    
+    <nav>
+        <ul>
+            <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
+            <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
+            <li><a href="">Alunos</a></li>
+            {% if dono %}
+                <li><a href="">Configurações</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+        
+    <section>
+        <h1>{{modulo.title}}</h1>
+        <hr>
+        {% if dono %}
+            <div class="dropdown">
+                <button class="dropbtn">Adicionar conteúdo</button>
+                <div class="dropdown-content">
+                    <a href="#">Atividade</a>
+                    <a href="#">Post</a>
+                </div>
+            </div>
+            <hr>
+        {% endif %}
+        
+        <div class="content-container">
+            <ul>
+                <li>Atividade 1</li>
+                <li>Post 2</li>
+            </ul>
+        
+        </div>
+
+    </section>
+    
+
+    <!-- <a href="{% url 'registro:check' %}">check</a> -->
+
+</body>
+</html>

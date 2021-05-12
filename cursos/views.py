@@ -187,6 +187,47 @@ def criar_atividade(request, curso_slug, modulo_id):
     else:
         return redirect('/')
 
+def criar_post(request, curso_slug, modulo_id):
+    dono=False
+    try:
+        c= Course.objects.get(slug=curso_slug)
+        m= Module.objects.get(pk=modulo_id)
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse curso não existe")
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse módulo não existe")
+    if(request.user==c.owner):
+            dono=True
+    if request.user.is_authenticated:
+        if dono:
+            if request.method == 'POST':
+                form = CreateActivityForm(request.POST)
+                if form.is_valid():
+                    record = form.save(commit=False)
+                    record.course=c
+                    record.module=m
+                    form.save()
+                    # owner = request.user
+                    # subject = form.cleaned_data.get('subject')
+                    # title = form.cleaned_data.get('title')
+                    # overview = form.cleaned_data.get('overview')
+                    # slug = slugify(form.cleaned_data.get('title'))
+
+                    # curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
+                    # curso.save()
+                    
+                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
+            else:
+
+                form = CreateActivityForm()
+            return render(request, 'createPost.html', {'form': form})
+        else:
+            print("opaopa")
+            return redirect('/genus/inicio/')
+    else:
+        return redirect('/')
+
+
 # def criar_post(request, curso_slug, modulo_id):
 #     if request.user.is_authenticated:
 #         dono=False

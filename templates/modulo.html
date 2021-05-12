@@ -29,7 +29,7 @@
                 <button class="dropbtn">Adicionar conteúdo</button>
                 <div class="dropdown-content">
                     <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
-                    <a href="#">Post</a>
+                    <a href="{% url 'cursos:criar-post' curso.slug modulo.id %}">Post</a>
                 </div>
             </div>
             <hr>

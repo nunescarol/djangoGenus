@@ -1,38 +1,82 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/iniciostyle.css' %}">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <ul class="menu">
-        <li>Perfil</li>
-        <li>Configurações</li>
-        <li><a href="{% url 'cursos:buscar-cursos' %}">Buscar cursos</a></li>
-        <li><a href="{% url 'registro:logout' %}">Sair</a></li>
-    </ul>
-
-    <div class="cursos">
-        <h1>Cursos:</h1>
-        <h3>Cursos dos quais você é done</h3>
-        <ul class="professor">
-            {% for curso in dono %}
-            <li><a href="{% url 'cursos:curso' curso.slug%}">{{curso.title}}</a></li>
-            {% endfor %}
-        </ul>
-
-        <h3>Cursos nos quais você está matriculade</h3>
-        <ul class="aluno">
-
-        </ul>
-    </div>
-
-    <div class="buttons">
-        <a href="{% url 'cursos:criar-curso' %}">Criar curso</a>
-        <button id="adicionar">Adicionar curso com código</button>
-
-    </div>
-
+    <body>
+        <nav>
+            <img src="../static/images/logo.svg" alt="Genus Logo">
+            <ul>
+                <li><i class="far fa-user-circle"></i><a href="#">Perfil</a> </li>
+                <li><i class="fas fa-cog"></i><a href=""> Configurações</a></li>
+            </ul>
+            <button class="exit-btn">SAIR</button>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">
+                    <a href="#"><i class="far fa-user-circle"></i>Perfil</a>
+                    <a href="#"><i class="fas fa-cog"></i>Configurações</a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+                </div>
+            </div>
+            
+        </nav>
+        <div class="content">
+            <header>
+                <h1>Cursos</h1>
+                <button>Criar curso</button>
+            </header>
+            <section>
+                <h2>Seus cursos</h2>
+                <div class="courses">
+                    <div class="course-box">
+                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
+                        <h3>Titulo do curso</h2>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
+                    </div>
+                    <div class="course-box">
+                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
+                        <h3>Titulo do curso</h2>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
+                    </div>
+                    <div class="course-box">
+                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
+                        <h3>Titulo do curso</h2>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
+                    </div>
+                    <div class="course-box">
+                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
+                        <h3>Titulo do curso</h2>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
+                    </div>
+                    <div class="course-box">
+                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
+                        <h3>Titulo do curso</h2>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
+                    </div>
+                    
+                    
+                </div>
+            </section>
+            <section>
+                <h2>Cursos matriculados</h2>
+                <div class="courses">
+                    <div class="course-box">
+                        <img src="https://ibcdn.canaltech.com.br/8FplhVkDQdAatiUcehCimgkGJlI=/512x288/smart/i257652.jpeg" alt="">
+                        <h2>Titulo do curso</h2>
+                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
 </body>
 </html>

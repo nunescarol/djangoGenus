@@ -5,7 +5,7 @@ from django.db.models import Q
 
 
 from django.contrib import admin
-from .models import Subject, Course, Module, Activity
+from .models import Subject, Course, Module, Activity, Image, Content
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug']
@@ -27,11 +27,30 @@ class ActivityInline(admin.StackedInline):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'subject', 'created']
+    list_display = ['title', 'subject', 'created', 'id']
     list_filter = ['created', 'subject']
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [ModuleInline, ActivityInline]
+
+@admin.register(Module)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'course', 'created', 'id']
+    list_filter = ['created', 'course']
+    # search_fields = ['title', 'overview']
+    # prepopulated_fields = {'slug': ('title',)}
+    # inlines = [ModuleInline, ActivityInline]
+
+@admin.register(Content)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ['id', 'item']
+    list_filter = ['id']
+
+@admin.register(Image)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'owner', 'created', 'id']
+    list_filter = ['created', 'owner']
+
 
 # @admin.register(Activity)
 # class CourseAdmin(admin.ModelAdmin):

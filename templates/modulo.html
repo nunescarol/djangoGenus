@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/stylemodulo.css">
+    <link rel="stylesheet" href="{% static 'css/stylemodulo.css' %}">
     <title>Genus</title>
 </head>
 <body>
     <header>
         <div class="out-container">
-            <img src="../static/images/Group 1.svg" alt="Genus Logo">
+            <img src="../static/images/logo.svg" alt="Genus Logo">
             <nav class="overlay">
                  <ul>
                     <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
@@ -33,7 +33,7 @@
             
             <div class="moduloheader">
                 
-                     <h2>{{modulo.title}}</h2>
+                    <h2>{{modulo.title}}</h2>
         
                     <div>
                         {% if dono %}
@@ -48,29 +48,21 @@
                     </div>
           
             </div>
-            
+
             <div class="content-container">
-                
+
                 <h2>Descrição do Modulo</h2>
-
                 <p>{{modulo.description}}</p>
-
-                <p>ashdbashdbahsbdhabsdhabsdbhdashdbahsdbasdjaipdjaskd</p>
-                <p>ashdbashdbahsbdhabsdhabsdbhdashdbahsdbasdjaipdjaskd</p>
-                <p>ashdbashdbahsbdhabsdhabsdbhdashdbahsdbasdjaipdjaskd</p>
-                <p>ashdbashdbahsbdhabsdhabsdbhdashdbahsdbasdjaipdjaskd</p>
-                <p>ashdbashdbahsbdhabsdhabsdbhdashdbahsdbasdjaipdjaskd</p>
-                <p>ashdbashdbahsbdhabsdhabsdbhdashdbahsdbasdjaipdjaskd</p>
-            
+    
                 <div class="atividades">
-                    <h2>Atividades e Posts</h2>
-                    <ul>
-                        {% for ap in atividades_posts %}
-                            <li>{{ap}}</li>
-                        {% endfor %}
-                    </ul>
+                        <h2>Atividades e Posts</h2>
+                        <ul>
+                            {% for ap in atividades_posts %}
+                                <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a> </li>
+                            {% endfor %}
+                        </ul>
                 </div>
-        </div>
+            </div>
     
         </section>
         

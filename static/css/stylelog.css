@@ -1,0 +1,131 @@
+/*Gerais*/
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    background-color: green;
+    background: url(../images/bgimg2.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+
+}
+button{
+    padding: 0.75em 2em;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(255, 167, 85);
+}
+
+/*Conteudo*/
+.out-container{
+    width: 100%;
+    height: auto;
+    background-color: #2F80ED;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.out-container header{
+    width: 60%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5em;
+    
+}
+.out-container header img{
+    max-width: 40%;
+}
+
+.content-box{
+    margin-top: 5em;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.content-box form{
+    display: flex;
+    flex-direction: column;
+}
+
+.login{
+    border-radius: 10px;
+    padding: 1em;
+    min-width: 30%;
+    height: auto;
+    width: auto;
+    background-color: rgba(255, 167, 85, 0.9);
+    display: flex;
+    flex-direction: column;
+}
+
+.login input{
+    border-radius: 10px;
+    border: none;
+    padding: 1em 2em;
+    width: 100%;
+    margin-bottom: 1em;
+}
+.login p{
+    font-weight: bold;
+    padding: 1.5em;
+    text-align: center;
+}
+.login p a:hover{
+    color:  #3e8cf3;
+}
+
+.login label{
+    font-weight: bold;
+}
+.login h1{
+   text-align: center;
+}
+.login button{
+    width: 50%;
+    font-weight: bold;
+    font-size: 0.9em;
+    align-self: center;
+    background-color: #2F80ED;
+}
+.login button:hover{
+    background-color: #3e8cf3;
+}
+/*footer*/
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+}
+.footer ul{ 
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    border-radius: 10px;
+    padding: 1.5em;
+    background-color:#2F80ED ;
+}
+.footer ul li{ 
+    margin: 0.5em 0 0.5em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+

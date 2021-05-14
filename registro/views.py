@@ -44,3 +44,6 @@ def user_logout(request):
 def check(request):
     print(request.user)
     return render(request, 'index.html')
+
+def recuperar_senha(request):
+    return render(request, 'resetPassword.html')

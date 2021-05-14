@@ -10,7 +10,17 @@
     <p>Resumo: {{curso.overview}}</p>
     <p><strong>Dono do curso: {{curso.owner}}</strong></p>
 
-    <a href="">Participar do curso.</a>
+    {% block content %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+        {% if form %}
+            <button type="submit">Participar do curso.</button>
+        {% else %}
+            <a href="#">Ir para a página do curso</a>
+        {% endif %}
+    </form>
+    {% endblock %}
 
     <!-- <a href="{% url 'registro:check' %}">check</a> -->
 

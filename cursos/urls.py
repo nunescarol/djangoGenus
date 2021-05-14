@@ -15,5 +15,8 @@ urlpatterns = [
     path('<str:curso_slug>/<int:modulo_id>/criar-atividade/',views.criar_atividade, name='criar-atividade'),
     path('<str:curso_slug>/<int:modulo_id>/<int:atividade_post_id>/',views.exibir_atividade_post, name='exibir-atividade-post'),
     path('<str:curso_slug>/<int:modulo_id>/<int:atividade_post_id>/adicionar-arquivo/',views.adicionar_arquivo, name='adicionar-arquivo'),
+    
+    
+    path('inicio/aaa/', views.teste, name='teste'),
     # path('<str:curso_slug>/<int:modulo_id>/criar-post/',views.criar_post, name='criar-post'),  
 ]

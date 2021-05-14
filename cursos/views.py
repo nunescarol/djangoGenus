@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.utils.text import slugify
 
 from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, Escolha, AddTextForm, AddVideoForm
+from registro.forms import InscricaoCurso
 from .models import Course, Module, Content, Activity, Post
 
 
@@ -33,7 +34,7 @@ def criar(request):
                 overview = form.cleaned_data.get('overview')
                 slug = slugify(form.cleaned_data.get('title'))
 
-                curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
+                curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug, students=None)
                 curso.save()
                 return redirect('/genus/inicio/')
 
@@ -56,12 +57,28 @@ def buscar_cursos(request):
         return redirect('/')
 
 def resumo(request, curso_slug):
+    ##com função de participar
     if request.user.is_authenticated:
         try:
             c= Course.objects.get(slug=curso_slug)
         except Course.DoesNotExist:
             raise Http404("Encontramos um erro")
-        return render(request, 'resumoCurso.html', {'curso':c})
+        if request.method == 'POST':
+            form = InscricaoCurso(request.POST)
+
+            if form.is_valid():
+                print('antes: '+str(c)+'-'+str(c.students.all()))
+                print(request.user)
+                c.students.add(request.user)
+                c.save()
+                print('depois: '+str(c)+'-'+str(c.students.all()))
+                return redirect('/genus/'+curso_slug+'/')
+            else:
+                #handle invalid form
+                return redirect('/genus/'+curso_slug+'/resumo/')
+        else:
+            form = InscricaoCurso(initial={'course':c})
+            return render(request, 'resumoCurso.html', {'curso':c, 'form': form})
     else:
         return redirect('/')
 
@@ -305,3 +322,8 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
 #                 Content.objects.create(module=self.module,item=obj)
 #             return redirect('module_content_list', self.module.id)
 #         return self.render_to_response({'form': form, 'object': self.obj})
+
+def teste(request):
+    c = Course.objects.get(slug='teste')
+    print(c.students)
+    return redirect('/')

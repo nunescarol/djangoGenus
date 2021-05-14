@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
+from cursos.models import Course
 
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(label='First Name', max_length=150)
@@ -21,3 +22,6 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class InscricaoCurso(forms.Form):
+    course = forms.ModelChoiceField(queryset=Course.objects.all(), widget=forms.HiddenInput)

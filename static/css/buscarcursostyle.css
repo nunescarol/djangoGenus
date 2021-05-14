@@ -1,0 +1,232 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: row;
+    font-family: 'Roboto', sans-serif;
+}
+
+nav{
+    display: flex;
+    flex-direction: column;
+    width: min(30%, 20rem);
+    height: 100vh;
+    margin-right: 2rem;
+    /*padding: 1rem 2rem;*/
+    background-color: #2F80ED;
+    position: fixed;
+}
+nav img{
+    width: 100%;
+    padding: 1rem 2rem;
+}
+
+nav ul{
+    list-style: none;
+    padding-left: 0;
+}
+nav :is(li){
+    margin-top: 1em;
+    background-color: rgb(255, 167, 85);
+    padding: 1rem 2rem;
+    display: flex;
+}
+i{
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    align-self: center;
+}
+nav a{
+    align-self: center;
+}
+nav a:link,
+nav a:visited{
+    color: #126ee7;
+    font-weight: bold;
+    text-decoration: none;
+}
+nav a:hover,
+nav li:hover{
+    background-color: rgb(255, 139, 31);
+}
+.exit-btn{
+    margin: auto 2rem 1.5rem 2rem;
+    padding: 1em 2em;
+    border-radius: 20px;
+    border: none;
+    background-color: #FFF;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.exit-btn:hover{
+    background-color: #F3F3F3;
+}
+/* Style The Dropdown Button */
+.dropbtn {
+    background-color: rgb(255, 167, 85);
+    color: white;
+    padding: 16px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+.dropbtn i{
+    margin: 0;
+}
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    display: none;
+    align-self: center;
+    
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 13rem;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+    background-color: rgb(255, 139, 31);
+  }
+.content{
+    flex-basis: 100%;
+    margin-top: 2rem;
+    padding-left: min(30%, 20rem);
+}
+
+.content header{
+    display: flex;
+    width: 90%;
+}
+
+.content header h1{
+    font-size: 4rem;
+}
+
+.content section, .content header{
+    margin: 2em 1em;
+}
+
+.content section p{
+    font-size: 1.5rem;
+}
+
+.content section input{
+    margin-top: 1rem;
+    border: 2px solid #2F80ED;
+    width: 50%
+
+}
+.content section input:focus{
+    outline: none;
+}
+.content section button{
+    cursor: pointer;
+    background-color: rgb(255, 167, 85);
+    border: 2px solid rgb(255, 167, 85);
+}
+.content section button:hover{
+    background-color: rgb(255, 139, 31);
+    border-color: rgb(255, 139, 31);
+}
+.content section input,
+.content section button{
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+.course-list ul{
+    list-style: none;
+}
+.course-list li{
+    padding: 1rem 1.5rem;
+    border: 2px solid rgb(255, 139, 31);
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    width: min(80%, 40rem);
+}
+.course-list li:hover{
+    transform: scale(1.1);
+    transition:  0.5s;
+}
+.course-list a{
+    text-decoration: none;
+    color: #000;
+}
+
+.course-list a:visited{
+    text-decoration: none;
+}
+
+
+
+
+@media (max-width: 650px){
+    body{
+        flex-direction: column;
+    }
+    nav{
+        height: auto;
+        position: fixed;
+        width: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    nav ul,
+    nav > button{
+        display: none;
+    }
+    nav img{
+        width: 50%;
+    }
+    .dropdown{
+        display: inline-block;
+        margin-left: 1rem;
+        margin-right: auto;
+    }
+    
+    .content{
+        padding-top: 2rem;
+        width: 100%;
+        padding: 4rem 0 0 0;
+    }
+    .content header{
+        margin: 0;
+        width: 100%;
+        padding: 0 1rem;
+    }
+    .content section input{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

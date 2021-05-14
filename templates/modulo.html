@@ -3,49 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/stylemodulo.css' %}">
     <title>Genus</title>
 </head>
 <body>
-    <h1>{{curso.title}}</h1>
-    
-    <nav>
-        <ul>
-            <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
-            <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
-            <li><a href="">Alunos</a></li>
-            {% if dono %}
-                <li><a href="">Configurações</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-        
-    <section>
-        <h1>{{modulo.title}}</h1>
-        <hr>
-        <p>{{modulo.description}}</p>
-        <hr>
-        {% if dono %}
-            <div class="dropdown">
-                <button class="dropbtn">Adicionar conteúdo</button>
-                <div class="dropdown-content">
-                    <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
-                    <a href="#">Post</a>
-                </div>
-            </div>
-            <hr>
-        {% endif %}
-        
-        <div class="content-container">
-            <ul>
-                {% for ap in atividades_posts %}
-                    <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a> </li>
-                {% endfor %}
-            </ul>
-        
+    <header>
+        <div class="out-container">
+            <img src="../static/images/logo.svg" alt="Genus Logo">
+            <nav class="overlay">
+                 <ul>
+                    <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
+                    <li><a href="">Alunos</a></li>
+                    {% if dono %}
+                        <li><a href="">Configurações</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              
         </div>
 
-    </section>
+    </header>
+
+    <div class="content-box">
+
+        <h1>{{curso.title}}</h1>
+
+        <section class="modulo">
+            
+            <div class="moduloheader">
+                
+                    <h2>{{modulo.title}}</h2>
+        
+                    <div>
+                        {% if dono %}
+                            <div class="dropdown">
+                                <button class="dropbtn">Adicionar conteúdo</button>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
+                                    <a href="#">Post</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+          
+            </div>
+
+            <div class="content-container">
+
+                <h2>Descrição do Modulo</h2>
+                <p>{{modulo.description}}</p>
     
+                <div class="atividades">
+                        <h2>Atividades e Posts</h2>
+                        <ul>
+                            {% for ap in atividades_posts %}
+                                <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a> </li>
+                            {% endfor %}
+                        </ul>
+                </div>
+            </div>
+    
+        </section>
+        
+    </div>
 
     <!-- <a href="{% url 'registro:check' %}">check</a> -->
 

@@ -7,14 +7,19 @@
 </head>
 <body>
   {% block content %}
-  <h2>Criar módulo</h2>
-  <form method="post">
+  <h2>Adicionar arquivo</h2>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ redirect }}">
-    <button type="submit">Criar</button>
+    {{ form1.as_p }}
+    {% if form2 %}
+      {{ form2.as_p }}
+      <button type="submit" name="arquivo" value="arquivo">Adicionar arquivo</button>
+    {% endif %}
   </form>
+
   {% endblock %}
+
   
 </body>
 </html>
+

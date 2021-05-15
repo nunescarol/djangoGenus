@@ -131,15 +131,18 @@ nav li:hover{
 .content header h1{
     font-size: 4rem;
 }
-
-.content header button{
+.header-buttons{
+    display: flex;
     margin-left: auto;
+}
+.content header button{
     margin: 1rem 0 1rem auto;
     padding: 1rem 2rem;
     border-radius: 30px;
     border: none;
     background-color: rgb(255, 167, 85);
     cursor: pointer;
+    margin-left: 1rem;
 }
 .content header button:hover{
     background-color: rgb(255, 153, 58);
@@ -179,7 +182,22 @@ nav li:hover{
 .course-box h3{
     font-size: 1.5rem;
 }
-
+@media (max-width: 800px){
+    .content header {
+        flex-direction: column;
+    }
+    .content header button{
+        margin-left: 0;
+    }
+    .header-buttons{
+        width: 100%;
+        justify-self: flex-start;
+        justify-content: space-around;
+    }
+    .header-buttons button{
+        width: 40%;
+    }
+}
 
 @media (max-width: 650px){
     body{

@@ -9,6 +9,13 @@ from django.urls import path, reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.apps import apps
 from django.db.models import Q
+from django.utils.text import slugify
+from django.core.paginator import Paginator
+from django.views.generic import ListView
+
+from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, Escolha, AddTextForm, AddVideoForm
+from .models import Course, Module, Content, Activity, Post
+
 
 
 def inicio(request):
@@ -42,8 +49,15 @@ def criar(request):
 
 def buscar_cursos(request):
     if request.user.is_authenticated:
-        cursos = Course.objects.all
-        cursos_dict = {'cursos': cursos}
+        cursos = Course.objects.all()
+        cursos_paginator = Paginator(cursos, 1)
+        num_pagina = request.GET.get('paginas')
+        paginas = cursos_paginator.get_page(num_pagina)
+        cursos_dict = {
+            'cursos': cursos,
+            'paginas': paginas,
+        }
+        
         return render(request, 'buscarCursos.html', cursos_dict)
     else:
         return redirect('/')

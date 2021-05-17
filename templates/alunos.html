@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/stylemodulo.css' %}">
+    <title>Genus</title>
+</head>
+<body>
+    <header>
+        <div class="out-container">
+            <img src="../static/images/logo.svg" alt="Genus Logo">
+            <nav class="overlay">
+                 <ul>
+                    <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
+                    <li><a href="">Alunos</a></li>
+                    {% if dono %}
+                        <li><a href="">Configurações</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              
+        </div>
+
+    </header>
+
+    <div class="content-box">
+
+        <h1>{{curso.title}}</h1>
+
+        <section class="modulo">
+            
+            <div class="moduloheader">
+                
+                    <h2>Alunos</h2>
+          
+            </div>
+
+            <div class="content-container">
+    
+                <div class="atividades">
+                        <h2>Alunos</h2>
+                        <ul>
+                            {% for aluno in alunos %}
+                                <li><a href="#">{{aluno}}</a> </li>
+                            {% endfor %}
+                        </ul>
+                </div>
+            </div>
+    
+        </section>
+        
+    </div>
+
+    <!-- <a href="{% url 'registro:check' %}">check</a> -->
+
+</body>
+</html>

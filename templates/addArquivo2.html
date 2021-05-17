@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  {% block content %}
+  <h2>Adicionar arquivo</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form1.as_p }}
+    {% if form2 %}
+      {{ form2.as_p }}
+      <button type="submit" name="arquivo" value="arquivo">Adicionar arquivo</button>
+    {% endif %}
+  </form>
+
+  {% endblock %}
+
+  
+</body>
+</html>
+

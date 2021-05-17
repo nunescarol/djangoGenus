@@ -1,16 +1,157 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar</title>
+    <link rel="stylesheet" href="{% static 'css/buscarcursostyle.css' %}">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Cursos disponíveis</h1>
+    <nav>
+        <img src="../static/images/logo.svg" alt="Genus Logo">
+        <ul>
+            <li><i class="far fa-user-circle"></i><a href="#">Perfil</a> </li>
+            <li><i class="fas fa-cog"></i><a href=""> Configurações</a></li>
+        </ul>
+        <button class="exit-btn">SAIR</button>
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-bars"></i></button>
+            <div class="dropdown-content">
+                <a href="#"><i class="far fa-user-circle"></i>Perfil</a>
+                <a href="#"><i class="fas fa-cog"></i>Configurações</a>
+                <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+            </div>
+        </div>
+        
+    </nav>
+    <div class="content">
+        <header>
+            <h1>Buscar Cursos</h1>
+        </header>
+        <section>
+            <p>Insira o nome do curso que você procura:</p>
+            <input type="text">
+            <button><i class="fas fa-search"></i>BUSCAR</button>
+        </section>
+        <!--seção páginas de cursos na base de dados, um curso por pagina para teste-->
+        <h1>Cursos disponíveis</h1>
     <ul class="cursos-query">
-        {% for curso in cursos %}
+        {% for curso in paginas %}
         <li><a href="{% url 'cursos:resumo' curso.slug %}">{{curso.title}}</a></li>
         {% endfor %}
+        <br><br><div class="pagination">
+            <span class="step-links">
+                {% if paginas.has_previous %}
+                    <a href="?paginas=1">&laquo; primeira</a>
+                    <a href="?paginas={{ page_obj.previous_page_number }}">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    {% load humanize %}
+                    Página {{ paginas.number|apnumber}} de {{ paginas.paginator.num_pages|apnumber }}.
+                </span>
+                
+                {% if paginas.has_next %}
+                    <a href="?paginas={{ paginas.next_page_number }}">próxima</a>
+                    <a href="?paginas={{ paginas.next_page_number }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
     </ul>
+    <!-- fim da seção de páginas de cursos
+        nao quis deletar seu codigo, amigo-->
+        <section class="course-list">
+            <ul>
+                <li>
+                    <a href="">
+                        <h2>Sistemas Distribuidos</h2>
+                        <p>Prof. Jairson</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <h2>Cálculo</h2>
+                        <p>Prof. Lino</p>
+                    </a>
+                    
+                </li>
+                <li>
+                    <a href="">
+                        <h2>Historia</h2>
+                        <p>Nome</p>
+                    </a>                     
+                </li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>-->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/buscarcursostyle.css' %}">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <img src="../static/images/logo.svg" alt="Genus Logo">
+        <ul>
+            <li><i class="far fa-user-circle"></i><a href="#">Perfil</a> </li>
+            <li><i class="fas fa-cog"></i><a href=""> Configurações</a></li>
+        </ul>
+        <button class="exit-btn">SAIR</button>
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-bars"></i></button>
+            <div class="dropdown-content">
+                <a href="#"><i class="far fa-user-circle"></i>Perfil</a>
+                <a href="#"><i class="fas fa-cog"></i>Configurações</a>
+                <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+            </div>
+        </div>
+        
+    </nav>
+    <div class="content">
+        <header>
+            <h1>Buscar Cursos</h1>
+        </header>
+        <section>
+            <p>Insira o nome do curso que você procura:</p>
+            <input type="text">
+            <button><i class="fas fa-search"></i>BUSCAR</button>
+        </section>
+        <section class="course-list">
+            <ul>
+                <li>
+                    <a href="">
+                        <h2>Sistemas Distribuidos</h2>
+                        <p>Prof. Jairson</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <h2>Cálculo</h2>
+                        <p>Prof. Lino</p>
+                    </a>
+                    
+                </li>
+                <li>
+                    <a href="">
+                        <h2>Historia</h2>
+                        <p>Nome</p>
+                    </a>                     
+                </li>
+            </ul>
+        </section>
+    </div>
 </body>
 </html>

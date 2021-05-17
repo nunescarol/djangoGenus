@@ -15,10 +15,14 @@
         <nav>
             <img src="../../static/images/logo.svg" alt="Genus Logo">
             <ul>
-                <li><i class="far fa-user-circle"></i><a href="#">Perfil</a> </li>
-                <li><i class="fas fa-cog"></i><a href=""> Configurações</a></li>
+                <a href="">
+                    <li> <i class="far fa-user-circle"></i>Perfil </li>
+                </a>
+                <a href="">
+                    <li><i class="fas fa-cog"></i> Configurações</li>
+                </a>
             </ul>
-            <button class="exit-btn">SAIR</button>
+            <button class="exit-btn"> <a href="{% url 'registro:logout' %}">SAIR</a> </button>
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-bars"></i></button>
                 <div class="dropdown-content">
@@ -32,7 +36,10 @@
         <div class="content">
             <header>
                 <h1>Cursos</h1>
-                <button>Criar curso</button>
+                <div class="header-buttons">
+                    <button>Buscar curso</button>
+                    <button>Criar curso</button>
+                </div>    
             </header>
             <section>
                 <h2>Seus cursos</h2>
@@ -71,7 +78,7 @@
                 <div class="courses">
                     <div class="course-box">
                         <img src="https://ibcdn.canaltech.com.br/8FplhVkDQdAatiUcehCimgkGJlI=/512x288/smart/i257652.jpeg" alt="">
-                        <h2>Titulo do curso</h2>
+                        <h3>Titulo do curso</h3>
                         <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
                     </div>
                 </div>

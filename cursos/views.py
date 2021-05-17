@@ -7,9 +7,13 @@ from django.forms.models import modelform_factory
 from django.apps import apps
 from django.db.models import Q
 from django.utils.text import slugify
+from django.core.paginator import Paginator
+from django.views.generic import ListView
 
 from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, Escolha, AddTextForm, AddVideoForm
+
 from .models import Course, Module, Content, Activity, Post
+from registro.forms import InscricaoCurso
 
 
 
@@ -33,7 +37,7 @@ def criar(request):
                 overview = form.cleaned_data.get('overview')
                 slug = slugify(form.cleaned_data.get('title'))
 
-                curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
+                curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug, students=None)
                 curso.save()
                 return redirect('/genus/inicio/')
 
@@ -49,19 +53,47 @@ def criar(request):
 
 def buscar_cursos(request):
     if request.user.is_authenticated:
-        cursos = Course.objects.all
-        cursos_dict = {'cursos': cursos}
+        cursos = Course.objects.all()
+        cursos_paginator = Paginator(cursos, 1)
+        num_pagina = request.GET.get('paginas')
+        paginas = cursos_paginator.get_page(num_pagina)
+        cursos_dict = {
+            'cursos': cursos,
+            'paginas': paginas,
+        }
+        
         return render(request, 'buscarCursos.html', cursos_dict)
     else:
         return redirect('/')
 
 def resumo(request, curso_slug):
+    
+    ##com função de participar
     if request.user.is_authenticated:
         try:
             c= Course.objects.get(slug=curso_slug)
         except Course.DoesNotExist:
             raise Http404("Encontramos um erro")
-        return render(request, 'resumoCurso.html', {'curso':c})
+        if request.method == 'POST':
+            form = InscricaoCurso(request.POST)
+
+            if form.is_valid():
+                print('antes: '+str(c)+'-'+str(c.students.all()))
+                print(request.user)
+                c.students.add(request.user)
+                c.save()
+                print('depois: '+str(c)+'-'+str(c.students.all()))
+                return redirect('/genus/'+curso_slug+'/')
+            else:
+                #handle invalid form
+                return redirect('/genus/'+curso_slug+'/resumo/')
+        else:
+            print(request.user)
+            print(c.owner)
+            form = None
+            if ((not request.user in c.students.all()) and (request.user != c.owner)):
+                form = InscricaoCurso(initial={'course':c})
+            return render(request, 'resumoCurso.html', {'curso':c, 'form': form})
     else:
         return redirect('/')
 
@@ -177,6 +209,43 @@ def criar_atividade(request, curso_slug, modulo_id):
     else:
         return redirect('/')
 
+def criar_post(request, curso_slug, modulo_id):
+    dono=False
+    try:
+        c= Course.objects.get(slug=curso_slug)
+        m= Module.objects.get(pk=modulo_id)
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse curso não existe")
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse módulo não existe")
+    if(request.user==c.owner):
+            dono=True
+    if request.user.is_authenticated:
+        if dono:
+            if request.method == 'POST':
+                form = CreateActivityForm(request.POST)
+                if form.is_valid():
+                    record = form.save(commit=False)
+                    record.course=c
+                    record.module=m
+                    form.save()
+                    # owner = request.user
+                    # subject = form.cleaned_data.get('subject')
+                    # title = form.cleaned_data.get('title')
+                    # overview = form.cleaned_data.get('overview')
+                    # slug = slugify(form.cleaned_data.get('title'))
+
+                    # curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
+                    # curso.save()
+                    
+                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
+            else:
+
+                form = CreateActivityForm()
+            return render(request, 'createPost.html', {'form': form})
+        else:
+            print("opaopa")
+            return redirect('/genus/inicio/')
 def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
     if request.user.is_authenticated:
         dono=False
@@ -184,6 +253,7 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
             c = Course.objects.get(slug=curso_slug)
             m = Module.objects.get(pk=modulo_id)
             ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
+            content = Content.objects.filter(module=m)
         except Course.DoesNotExist:
             raise Http404("Ops, esse curso não existe")
         except Module.DoesNotExist:
@@ -191,7 +261,7 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
         
         if request.user==c.owner:
             dono=True
-        return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividade_post':ap})
+        return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividade_post': ap, 'contents': content})
 
     else:
         return redirect('/')
@@ -305,3 +375,20 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
 #                 Content.objects.create(module=self.module,item=obj)
 #             return redirect('module_content_list', self.module.id)
 #         return self.render_to_response({'form': form, 'object': self.obj})
+
+def teste(request):
+    c = Course.objects.get(slug='teste')
+    print(c.students)
+    return redirect('/')
+
+def exibir_alunos(request, curso_slug):
+    if request.user.is_authenticated:
+        try:
+            c = Course.objects.get(slug=curso_slug)
+        except Course.DoesNotExist:
+            raise Http404("Ops, esse curso não existe")
+        alunos=c.students.all()
+        return render(request, 'alunos.html', {'curso': c, 'alunos': alunos})
+
+    else:
+        return redirect('/')

@@ -131,73 +131,65 @@ nav li:hover{
 .content header h1{
     font-size: 4rem;
 }
-.header-buttons{
-    display: flex;
-    margin-left: auto;
-}
-.content header button{
-    margin: 1rem 0 1rem auto;
-    padding: 1rem 2rem;
-    border-radius: 30px;
-    border: none;
-    background-color: rgb(255, 167, 85);
-    cursor: pointer;
-    margin-left: 1rem;
-}
-.content header button:hover{
-    background-color: rgb(255, 153, 58);
-}
 
 .content section, .content header{
     margin: 2em 1em;
 }
-.content section h2{
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-.courses{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
 
-.course-box{
-    width: max(20%, 15rem);
-    border-radius: 1rem;
-    overflow: hidden;
-    border: 1px solid #2F80ED;
-}
-
-.course-box img{
-    width: 100%;
-}
-
-.course-box h3,
-.course-box p{
-    padding: 1rem;
-    text-align: justify;
-}
-
-.course-box h3{
+.content section p{
     font-size: 1.5rem;
 }
-@media (max-width: 800px){
-    .content header {
-        flex-direction: column;
-    }
-    .content header button{
-        margin-left: 0;
-    }
-    .header-buttons{
-        width: 100%;
-        justify-self: flex-start;
-        justify-content: space-around;
-    }
-    .header-buttons button{
-        width: 40%;
-    }
+
+.content section input{
+    margin-top: 1rem;
+    border: 2px solid #2F80ED;
+    width: 50%
+
 }
+.content section input:focus{
+    outline: none;
+}
+.content section button{
+    cursor: pointer;
+    background-color: rgb(255, 167, 85);
+    border: 2px solid rgb(255, 167, 85);
+}
+.content section button:hover{
+    background-color: rgb(255, 139, 31);
+    border-color: rgb(255, 139, 31);
+}
+.content section input,
+.content section button{
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+.course-list ul{
+    list-style: none;
+}
+.course-list li{
+    padding: 1rem 1.5rem;
+    border: 2px solid rgb(255, 139, 31);
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    width: min(80%, 40rem);
+}
+.course-list li:hover{
+    transform: scale(1.1);
+    transition:  0.5s;
+}
+.course-list a{
+    text-decoration: none;
+    color: #000;
+}
+
+.course-list a:visited{
+    text-decoration: none;
+}
+
+
+
 
 @media (max-width: 650px){
     body{
@@ -233,16 +225,8 @@ nav li:hover{
         width: 100%;
         padding: 0 1rem;
     }
-}
-
-@media (max-width: 600px){
-    .course-box{
-        width: min(50%, 13rem);
-    }
-}
-
-@media (max-width: 465px){
-    .course-box{
-        width: auto;
+    .content section input{
+        width: 100%;
+        margin-bottom: 1rem;
     }
 }

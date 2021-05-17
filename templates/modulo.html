@@ -36,18 +36,17 @@
                 
                     <h2>{{modulo.title}}</h2>
         
-    <section>
-        <h1>{{modulo.title}}</h1>
-        <hr>
-        <p>{{modulo.description}}</p>
-        <hr>
-        {% if dono %}
-            <div class="dropdown">
-                <button class="dropbtn">Adicionar conteúdo</button>
-                <div class="dropdown-content">
-                    <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
-                    <a href="{% url 'cursos:criar-post' curso.slug modulo.id %}">Post</a>
-                </div>
+                    <div>
+                        {% if dono %}
+                            <div class="dropdown">
+                                <button class="dropbtn">Adicionar conteúdo</button>
+                                <div class="dropdown-content">
+                                    <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
+                                    <a href="{% url 'cursos:criar-post' curso.slug modulo.id %}">Post</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
             </div>
 
             <div class="content-container">

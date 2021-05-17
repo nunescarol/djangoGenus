@@ -46,23 +46,4 @@ def check(request):
     return render(request, 'index.html')
 
 def recuperar_senha(request):
-<<<<<<< HEAD
     return render(request, 'resetPassword.html')
-=======
-    return render(request, 'resetPassword.html')
-
-# def participar(request, curso_id):
-#     if request.user.is_authenticated:
-#         if request.method == 'POST':
-#             form = InscricaoCurso(request.POST)
-
-#             if form.is_valid():
-#                 pass
-#             else:
-#                 #handle invalid form
-#                 return redirect('/genus/inicio')
-#         else:
-#             pass
-#     else:
-#         pass
->>>>>>> branch_lari

@@ -10,7 +10,7 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, Escolha, AddTextForm, AddVideoForm
+from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm
 
 from .models import Course, Module, Content, Activity, Post
 from registro.forms import InscricaoCurso

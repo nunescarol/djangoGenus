@@ -34,7 +34,7 @@ def criar(request):
                 overview = form.cleaned_data.get('overview')
                 slug = slugify(form.cleaned_data.get('title'))
 
-                curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug, students=None)
+                curso = Course(owner=owner, subject=subject, title=title, overview=overview, slug=slug)
                 curso.save()
                 return redirect('/genus/inicio/')
 

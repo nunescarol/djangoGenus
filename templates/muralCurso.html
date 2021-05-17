@@ -13,7 +13,7 @@
         <ul>
             <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
             <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
-            <li><a href="">Alunos</a></li>
+            <li><a href="{% url 'cursos:exibir-alunos' curso.slug %}">Alunos</a></li>
             {% if dono %}
                 <li><a href="">Configurações</a></li>
             {% endif %}

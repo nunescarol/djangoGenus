@@ -54,7 +54,7 @@
                     {% load humanize %}
                     Página {{ paginas.number|apnumber}} de {{ paginas.paginator.num_pages|apnumber }}.
                 </span>
-        
+                
                 {% if paginas.has_next %}
                     <a href="?paginas={{ paginas.next_page_number }}">próxima</a>
                     <a href="?paginas={{ paginas.next_page_number }}">última &raquo;</a>

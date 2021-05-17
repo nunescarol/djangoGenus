@@ -29,6 +29,14 @@
             <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id atividade_post.id %}">Adicionar arquivos</a>
             <hr>
         {% endif %}
+        {% for content in contents %}
+            <ul>
+                <li><a href="">{{content.item.render}}</a></li>
+            </ul>
+        {% endfor %}
+
+
+        
 
 
     </section>

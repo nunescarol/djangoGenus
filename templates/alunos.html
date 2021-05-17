@@ -34,32 +34,17 @@
             
             <div class="moduloheader">
                 
-                    <h2>{{modulo.title}}</h2>
-        
-                    <div>
-                        {% if dono %}
-                            <div class="dropdown">
-                                <button class="dropbtn">Adicionar conteúdo</button>
-                                <div class="dropdown-content">
-                                    <a href="{% url 'cursos:criar-atividade' curso.slug modulo.id %}">Atividade</a>
-                                    <a href="#">Post</a>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
+                    <h2>Alunos</h2>
           
             </div>
 
             <div class="content-container">
-
-                <h2>Descrição do Modulo</h2>
-                <p>{{modulo.description}}</p>
     
                 <div class="atividades">
-                        <h2>Atividades e Posts</h2>
+                        <h2>Alunos</h2>
                         <ul>
-                            {% for ap in atividades_posts %}
-                                <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a> </li>
+                            {% for aluno in alunos %}
+                                <li><a href="#">{{aluno}}</a> </li>
                             {% endfor %}
                         </ul>
                 </div>

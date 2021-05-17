@@ -5,7 +5,8 @@ from django.db.models import Q
 
 
 from django.contrib import admin
-from .models import Subject, Course, Module, Activity, Image, Content
+from .models import Subject, Course, Module, Activity, Image, Content, Text
+
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug']
@@ -51,6 +52,10 @@ class ModuleAdmin(admin.ModelAdmin):
     list_display = ['title', 'owner', 'created', 'id']
     list_filter = ['created', 'owner']
 
+@admin.register(Text)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'owner', 'created', 'id']
+    list_filter = ['created', 'owner']
 
 # @admin.register(Activity)
 # class CourseAdmin(admin.ModelAdmin):

@@ -45,7 +45,7 @@ STATUS_CHOICES = (
     (4, "Arquivo"),
 )
 
-class Escolha(forms.Form):
+class EscolhaTipo(forms.Form):
     escolha = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'onchange': "this.form.submit()"}))
 
 

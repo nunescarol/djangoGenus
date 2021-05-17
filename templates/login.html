@@ -6,29 +6,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/stylelog.css' %}">
-<<<<<<< HEAD
-  <title>Log in</title>
-</head>
-<body>
-  <h2>Log In</h2>
-  <form method="post">
-    {% csrf_token %}
-    <label for="username">Username: </label>
-    <input id="username" type="text" name="username">
-    <label for="password">Password: </label>
-    <input id="password" type="password" name="password">
-    <button type="submit">Log In</button>
-  </form>
-  <p>Me tire daqui, quero fazer <a href="{% url 'registro:cadastro' %}">cadastro</a></p>
-  <p><a href="{% url 'registro:recuperar-senha' %}">Esqueceu sua senha?</a></p>
-  {% if messages %}
-  <ul class="messages">
-      {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-=======
 
   <title>Log in</title>
 </head>
@@ -66,6 +43,5 @@
         </ul>
       {% endif %}
   </div>
->>>>>>> branch_lari
 </body>
 </html>

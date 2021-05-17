@@ -17,7 +17,7 @@
         {% if form %}
             <button type="submit">Participar do curso.</button>
         {% else %}
-            <a href="#">Ir para a página do curso</a>
+            <a href="{% url 'cursos:curso' curso.slug %}">Ir para a página do curso</a>
         {% endif %}
     </form>
     {% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'embed_video',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,6 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD'] #past the key or passwor
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Equipe Genus'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

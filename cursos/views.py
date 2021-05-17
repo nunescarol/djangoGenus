@@ -209,7 +209,6 @@ def criar_atividade(request, curso_slug, modulo_id):
     else:
         return redirect('/')
 
-<<<<<<< HEAD
 def criar_post(request, curso_slug, modulo_id):
     dono=False
     try:
@@ -247,7 +246,6 @@ def criar_post(request, curso_slug, modulo_id):
         else:
             print("opaopa")
             return redirect('/genus/inicio/')
-=======
 def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
     if request.user.is_authenticated:
         dono=False
@@ -325,7 +323,6 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
         else:
             form1 = EscolhaTipo()
             return render(request, 'addArquivo2.html', {'form1': form1, 'form2': None})
->>>>>>> main
     else:
         return redirect('/')
 

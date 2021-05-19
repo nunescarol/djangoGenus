@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from .models import Subject, Module, Activity, Content, Image, Text, File, Video
 
 class CreateCourseForm(forms.Form):
-    subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'))
+    subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'),label="Área",widget=forms.Select(attrs={'class':'testclass'}))
     title = forms.CharField(max_length=100)
     overview = forms.CharField(widget=forms.Textarea)
 

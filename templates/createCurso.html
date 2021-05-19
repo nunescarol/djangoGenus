@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   {% block content %}
   <h2>Criar curso</h2>
@@ -15,6 +17,62 @@
   </form>
   {% endblock %}
   
+</body>
+-->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/createCursoStyle.css' %}">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav>
+    <img src="../../static/images/logo.svg" alt="Genus Logo">
+    <ul>
+        <a href="#"><li><i class="far fa-user-circle"></i>Perfil</li></a> 
+        <a href=""><li><i class="fas fa-cog"></i> Configurações</li></a>
+    </ul>
+    <button class="exit-btn">SAIR</button>
+    <div class="dropdown">
+        <button class="dropbtn"><i class="fas fa-bars"></i></button>
+        <div class="dropdown-content">
+            <a href="#"><i class="far fa-user-circle"></i>Perfil</a>
+            <a href="#"><i class="fas fa-cog"></i>Configurações</a>
+            <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+        </div>
+    </div>
+    
+</nav>
+<div class="content">
+    <header>
+        <h1>Criar curso</h1>
+    </header>
+    <section>
+        <form action="" method="post">
+          <label for="courseSubject">Área</label>
+          <input list="courseSubjects"  name="courseSubject" placeholder="Selecione uma área">
+          <datalist id="courseSubjects">
+            <option value="Area1">
+            <option value="Area2">
+            <option value="Area3">
+            <option value="Area4">
+          </datalist>
+          <label for="courseTitle">Nome</label>
+          <input type="text" id="courseTitle" name="courseTitle">
+          <label for="courseOverview">Descrição</label>
+          <textarea id="courseOverview" ></textarea>
+          <button type="submit">Criar</button>
+        </form>
+    </section>
+    
+</div>
 </body>
 </html>
 

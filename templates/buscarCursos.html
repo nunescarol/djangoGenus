@@ -31,11 +31,15 @@
     <div class="content">
         <header>
             <h1>Buscar Cursos</h1>
+
         </header>
         <section>
             <p>Insira o nome do curso que você procura:</p>
-            <input type="text">
-            <button><i class="fas fa-search"></i>BUSCAR</button>
+            <form action="{% url 'cursos:buscar-cursos' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="search">
+                <button><i class="fas fa-search"></i>BUSCAR</button>
+            </form>
         </section>
         <!--seção páginas de cursos na base de dados, um curso por pagina para teste-->
         <h1>Cursos disponíveis</h1>

@@ -57,12 +57,18 @@ def buscar_cursos(request):
         cursos_paginator = Paginator(cursos, 1)
         num_pagina = request.GET.get('paginas')
         paginas = cursos_paginator.get_page(num_pagina)
-        cursos_dict = {
-            'cursos': cursos,
-            'paginas': paginas,
-        }
         
-        return render(request, 'buscarCursos.html', cursos_dict)
+
+        if request.method == 'POST':
+            search = request.POST['search']
+            cursos = Course.objects.filter(Q(title__contains=search) | Q(overview__contains=search) | Q(subject__title__contains=search) | Q(title__contains=search) | Q(owner__username__contains=search))
+            cursos_paginator = Paginator(cursos, 1)
+            num_pagina = request.GET.get('paginas')
+            paginas = cursos_paginator.get_page(num_pagina)
+            print(cursos)
+            return render(request, 'buscarCursos.html', {'cursos': cursos, 'paginas': paginas, 'search': search})
+        
+        return render(request, 'buscarCursos.html', {'cursos': cursos, 'paginas': paginas,})
     else:
         return redirect('/')
 

@@ -7,6 +7,7 @@ urlpatterns = [
     path('inicio/',views.inicio, name='inicio'),
     path('criar/',views.criar, name='criar-curso'),
     path('cursos/',views.buscar_cursos, name='buscar-cursos'),
+    path('buscar/',views.buscar_cursos, name='buscar'),
     path('<str:curso_slug>/resumo/',views.resumo, name='resumo'),
     path('<str:curso_slug>/',views.curso, name='curso'),
     path('<str:curso_slug>/criar-modulo/',views.criar_modulo, name='criar-modulo'),

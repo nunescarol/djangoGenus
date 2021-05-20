@@ -3,24 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/muralcurso.css' %}">
     <title>Document</title>
+    <!-- Imports -->
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
-    <h1>{{curso.title}}</h1>
-    <a href="{% url 'cursos:criar-modulo' curso.slug %}">teste formulario</a>
-    
-    <nav>
-        <ul>
-            <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
-            <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
-            <li><a href="">Alunos</a></li>
-            {% if dono %}
-                <li><a href="">Configurações</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-        
-    <div class="content-container">
+
+    <!-- Scripts-->
+    <script>
+        function messageText(){
+            document.getElementById('message').style.height="150px";
+            document.getElementById('group1').style.opacity="1";
+            return 
+        }
+
+        function cancelMessage(){
+            document.getElementById('message').style.height="auto";
+            document.getElementById('group1').style.opacity="0";
+            return
+        }
+    </script>
+
+    <!-- <h1>{{curso.title}}</h1>
+    <a href="{% url 'cursos:criar-modulo' curso.slug %}">teste formulario</a> -->
+
+    <header>
+        <div class="out-container">
+            <div class="out-header">
+                <h2>{{curso.title}}</h2>
+                <div class="brand-img">
+                    <img src="../static/images/logo.svg" alt="Genus Logo">
+                </div>
+                <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2>
+                
+            </div>
+            <nav class="overlay">
+                 <ul>
+                    <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
+                    <li><a href="">Alunos</a></li>
+                    {% if dono %}
+                        <li><a href="">Configurações</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              
+        </div>
+
+    </header>
+
+    <!-- <div class="content-container">
     
         <h2>Mural</h2>
         <hr>
@@ -30,7 +64,69 @@
             <p>Teste</p>
             <hr>
         </div>
+    </div> -->
 
+    <div class="container">
+        <div class="muralimg">
+            <h1>{{curso.title}}</h1>
+        </div>
+        <div class="content-container">
+            <div class="card">
+                <form method="POST">
+                       <textarea  id="message" name="message" placeholder="Digite algo para Turma..." cols="20"
+                       onclick="messageText()" ></textarea>
+                   <div class="groupbtn" id="group1">
+                       <button >Postar</button>
+                       <button type="button" onclick="cancelMessage()"> Cancelar</button>
+                   </div>
+               </form>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1><i class="far fa-user fa-sm"></i></h1>
+                    <div class="info">
+                        <div class="infoUser">
+                            <span><b>User Name</b></span>
+                            <span><b><i>18/05/2021</i> </b></span>
+                        </div>
+                        <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>Notas no siga</p>
+                </div>
+            </div> 
+            <div class="card">
+                <div class="card-header">
+                    <h1><i class="far fa-user fa-sm"></i></h1>
+                    <div class="info">
+                        <div class="infoUser">
+                            <span><b>User Name</b></span>
+                            <span><b><i>18/05/2021</i> </b> </span>
+                        </div>
+                        <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>Notas no siga</p>
+                </div>
+            </div> 
+            <div class="card">
+                <div class="card-header">
+                    <h1><i class="far fa-user fa-sm"></i></h1>
+                    <div class="info">
+                        <div class="infoUser">
+                            <span><b>User Name</b></span>
+                            <span><b><i>18/05/2021</i> </b> </span>
+                        </div>
+                        <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>Notas no siga</p>
+                </div>
+            </div> 
+        </div>
     </div>
 
 

@@ -20,7 +20,16 @@ from registro.forms import InscricaoCurso
 def inicio(request):
     if request.user.is_authenticated:
         cursos_dono = Course.objects.filter(owner=request.user)
-        cursos_dict = {'dono': cursos_dono}
+        c = Course.objects.all()
+        cursos_matriculado = []
+        for curso in c:
+            if request.user in curso.students.all():
+                cursos_matriculado.append(curso)
+
+        cursos_dict = {'dono': cursos_dono,
+                        'cursos': c,
+                        'matriculado': cursos_matriculado,     
+                    }
         return render(request, 'inicio.html', cursos_dict)
     else:
         return redirect('/')

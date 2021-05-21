@@ -44,43 +44,32 @@
             <section>
                 <h2>Seus cursos</h2>
                 <div class="courses">
-                    <div class="course-box">
-                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
-                        <h3>Titulo do curso</h2>
-                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
-                    </div>
-                    <div class="course-box">
-                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
-                        <h3>Titulo do curso</h2>
-                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
-                    </div>
-                    <div class="course-box">
-                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
-                        <h3>Titulo do curso</h2>
-                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
-                    </div>
-                    <div class="course-box">
-                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
-                        <h3>Titulo do curso</h2>
-                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
-                    </div>
-                    <div class="course-box">
-                        <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt="">
-                        <h3>Titulo do curso</h2>
-                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
-                    </div>
-                    
+                    {% for curso in dono %}
+                   
+                        <div class="course-box">
+                            <a href="{% url 'cursos:resumo' curso.slug %}">
+                            <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt=""></a>
+                            <h3>{{curso.title}}</h3>
+                            <p>{{curso.overview}}</p>
+                            
+                            </div>
+                    {% endfor %}                    
                     
                 </div>
             </section>
             <section>
                 <h2>Cursos matriculados</h2>
                 <div class="courses">
-                    <div class="course-box">
-                        <img src="https://ibcdn.canaltech.com.br/8FplhVkDQdAatiUcehCimgkGJlI=/512x288/smart/i257652.jpeg" alt="">
-                        <h3>Titulo do curso</h3>
-                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ullam deserunt minima officia necessitatibus aliquid dolores cupiditate provident sit doloremque.</p>
-                    </div>
+                    {% for curso in matriculado %}
+                   
+                        <div class="course-box">
+                            <a href="">
+                            <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt=""></a>
+                            <h3>{{curso.title}}</h3>
+                            <p>{{curso.overview}}</p>
+                            
+                            </div>
+                         {% endfor %}
                 </div>
             </section>
         </div>

@@ -268,7 +268,18 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
             c = Course.objects.get(slug=curso_slug)
             m = Module.objects.get(pk=modulo_id)
             ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
-            content = Content.objects.filter(module=m)
+            content = Content.objects.filter(module=ap)
+            content_modulo=[]
+            content_estudantes=[]
+            own_resposta=[]
+            for cont in content:
+                if cont.item.owner==c.owner:
+                    content_modulo.append(cont)
+                else:
+                    content_estudantes.append(cont)
+                    if cont.item.owner==request.user:
+                        own_resposta.append(cont)
+
         except Course.DoesNotExist:
             raise Http404("Ops, esse curso não existe")
         except Module.DoesNotExist:
@@ -276,7 +287,7 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
         
         if request.user==c.owner:
             dono=True
-        return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividade_post': ap, 'contents': content})
+        return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividade_post': ap, 'contents_modulo': content_modulo, 'respostas_estudantes':content_estudantes, 'respostas': own_resposta})
 
     else:
         return redirect('/')
@@ -300,12 +311,11 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
             m = Module.objects.get(pk=modulo_id)
         except Module.DoesNotExist:
             raise Http404("Ops, esse módulo ou conteudo não existe")
-        
-        if request.user==c.owner:
-            dono=True
-        else:
-            print("voce nao tem permissao para fazer isso.")
-            return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/'+str(atividade_post_id)+'/')
+
+        try:
+            ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
+        except Module.DoesNotExist:
+            raise Http404("Ops, esse módulo ou conteudo não existe")
         
         if request.method == 'POST':
             form1 = EscolhaTipo(request.POST)
@@ -321,7 +331,7 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
                         record.owner=request.user
                         form2.save()
 
-                        Content.objects.create(module=m,item=record)
+                        Content.objects.create(module=ap,item=record)
                         return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/'+str(atividade_post_id)+'/')
                     else:
                         # handle invalid form
@@ -346,6 +356,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
         c= Course.objects.get(slug=curso_slug)
         m= Module.objects.get(pk=modulo_id)
         p= Module.objects.get(pk=atividade_post_id)
+        # p= Post.objects.get(pk=atividade_post_id)
         #a= Comment.author = request.user
     except Course.DoesNotExist:
         raise Http404("Ops, esse curso não existe")
@@ -356,6 +367,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
                 form = CommentForm(request.POST)
                 if form.is_valid():
                     record = form.save(commit=False)
+                    # record.author = request.user
                     record.course=c
                     record.module=m
                     record.post=p 

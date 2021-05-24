@@ -28,17 +28,29 @@
         {% if dono %}
             <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id atividade_post.id %}">Adicionar arquivos</a>
             <hr>
+        {% else %}
+            <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id atividade_post.id %}">Entregar atividade</a>
+            <hr>
         {% endif %}
-        {% for content in contents %}
+        {% for content in contents_modulo %}
             <ul>
                 <li><a href="">{{content.item.render}}</a></li>
             </ul>
         {% endfor %}
 
-
-        
-
-
+        {% if dono %}
+            <a href="#">Visualizar todas respostas</a>
+        {% else %}
+            <h2>Sua resposta:</h2>
+            <hr>
+            {% with total=business.employees.count %}
+            {% endwith %}
+            {% for content in respostas %}
+                <ul>
+                    <li><a href="">{{content.item.render}}</a></li>
+                </ul>
+            {% endfor %}
+        {% endif %}
     </section>
     
     <section>

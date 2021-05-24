@@ -10,7 +10,7 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm
+from .forms import CreateCourseForm, CreateActivityForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm
 
 from .models import Course, Module, Content, Activity, Post, Comment
 from registro.forms import InscricaoCurso
@@ -238,7 +238,7 @@ def criar_post(request, curso_slug, modulo_id):
     if request.user.is_authenticated:
         if dono:
             if request.method == 'POST':
-                form = CreateActivityForm(request.POST)
+                form = CreatePostForm(request.POST)
                 if form.is_valid():
                     record = form.save(commit=False)
                     record.course=c
@@ -256,7 +256,7 @@ def criar_post(request, curso_slug, modulo_id):
                     return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
             else:
 
-                form = CreateActivityForm()
+                form = CreatePostForm()
             return render(request, 'createPost.html', {'form': form})
         else:
             print("opaopa")

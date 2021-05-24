@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Subject, Module, Activity, Content, Image, Text, File, Video, Comment
+from .models import Subject, Module, Activity, Post, Content, Image, Text, File, Video, Comment
 
 class CreateCourseForm(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'),label="Área",widget=forms.Select(attrs={'class':'testclass'}))
@@ -18,6 +18,10 @@ class CreateActivityForm(ModelForm):
         model = Activity
         fields = ['title', 'description']
 
+class CreatePostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'description']
 class AddFileForm(ModelForm):
     class Meta:
         model = File

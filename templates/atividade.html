@@ -41,6 +41,21 @@
 
     </section>
     
+    <section>
+        <h2>Comentários:</h2>
+        {% if not atividade_post.comments.all %}
+                Sem Comentários
+                <br><a href="{% url 'cursos:adicionar-comentario' curso.slug modulo.id atividade_post.id %}">Adicionar Comentário</a>
+        {% else %}
+                {% for comment in atividade_post.comments.all %}
+                    {{ comment.author }} - {{ comment.created_date}}
+                     <br>
+                    {{ comment.text }} <br><br>
+                {% endfor %}
+                <br><a href="{% url 'cursos:adicionar-comentario' curso.slug modulo.id atividade_post.id %}">Adicionar Comentário</a>    
+        {% endif %}
+
+    </section>
 
     <!-- <a href="{% url 'registro:check' %}">check</a> -->
 

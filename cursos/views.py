@@ -10,9 +10,9 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm
+from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm
 
-from .models import Course, Module, Content, Activity, Post
+from .models import Course, Module, Content, Activity, Post, Comment
 from registro.forms import InscricaoCurso
 
 
@@ -340,6 +340,30 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
             return render(request, 'addArquivo2.html', {'form1': form1, 'form2': None})
     else:
         return redirect('/')
+
+def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
+    try:
+        c= Course.objects.get(slug=curso_slug)
+        m= Module.objects.get(pk=modulo_id)
+        p= Module.objects.get(pk=atividade_post_id)
+        #a= Comment.author = request.user
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse curso não existe")
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse módulo não existe")
+    
+    if request.method == 'POST':
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    record = form.save(commit=False)
+                    record.course=c
+                    record.module=m
+                    record.post=p 
+                    form.save()
+                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
+    else:
+        form = CommentForm()    
+        return render(request, 'addComentario.html',{'form': form})
 
 
 # def criar_post(request, curso_slug, modulo_id):

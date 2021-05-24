@@ -22,6 +22,7 @@ class CreatePostForm(ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'description']
+
 class AddFileForm(ModelForm):
     class Meta:
         model = File
@@ -55,7 +56,7 @@ class EscolhaTipo(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('author', 'text',)
+        fields = ('text',)
 
 # class CreateActivityAdminForm(ModelForm):
 #     class Meta:

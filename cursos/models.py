@@ -108,7 +108,7 @@ class Video(ItemBase):
     url = models.URLField()
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    post = models.ForeignKey(Module, on_delete=models.CASCADE, related_name="comments")
     author = models.CharField(max_length=255)
     #models.ForeignKey(User,related_name='author_id', on_delete=models.CASCADE)
     text = models.TextField()

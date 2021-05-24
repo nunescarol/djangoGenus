@@ -261,6 +261,7 @@ def criar_post(request, curso_slug, modulo_id):
         else:
             print("opaopa")
             return redirect('/genus/inicio/')
+
 def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
     if request.user.is_authenticated:
         dono=False
@@ -355,7 +356,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
     try:
         c= Course.objects.get(slug=curso_slug)
         m= Module.objects.get(pk=modulo_id)
-        p= Module.objects.get(pk=atividade_post_id)
+        p= Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
         # p= Post.objects.get(pk=atividade_post_id)
         #a= Comment.author = request.user
     except Course.DoesNotExist:
@@ -367,7 +368,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
                 form = CommentForm(request.POST)
                 if form.is_valid():
                     record = form.save(commit=False)
-                    # record.author = request.user
+                    record.author = request.user
                     record.course=c
                     record.module=m
                     record.post=p 
@@ -375,7 +376,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
                     return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
     else:
         form = CommentForm()    
-        return render(request, 'addComentario.html',{'form': form})
+        return render(request, 'addComentario.html',{'form': form, 'atividade_post': p,})
 
 
 # def criar_post(request, curso_slug, modulo_id):

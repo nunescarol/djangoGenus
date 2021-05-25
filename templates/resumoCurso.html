@@ -1,26 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/resumoCurso.css' %}">
     <title>{{curso.title}}</title>
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>{{curso.title}}</h1>
-    <p>Resumo: {{curso.overview}}</p>
-    <p><strong>Dono do curso: {{curso.owner}}</strong></p>
+    <header>
+        <nav>
+            <img src="../../static/images/logo.svg" alt="Genus Logo">
+            <ul>
+                <a href="">
+                    <li> <i class="far fa-user-circle"></i>Perfil </li>
+                </a>
+                <a href="">
+                    <li><i class="fas fa-cog"></i> Configurações</li>
+                </a>
+            </ul>
+            <button class="exit-btn">SAIR</button>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">
+                    <a href="#"><i class="far fa-user-circle"></i>Perfil</a>
+                    <a href="#"><i class="fas fa-cog"></i>Configurações</a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+                </div>
+            </div>
 
-    {% block content %}
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-        {% if form %}
-            <button type="submit">Participar do curso.</button>
-        {% else %}
-            <a href="{% url 'cursos:curso' curso.slug %}">Ir para a página do curso</a>
-        {% endif %}
-    </form>
-    {% endblock %}
+        </nav>
+    </header>
+        <div class="card">
+            <div class="card-header">
+                <h1>{{curso.title}}</h1>
+            </div>
+            <div class="card-content">
+               <p>{{curso.overview}}</p>
+            </div>
+            <div class="card-footer">
+                <p><strong>Dono do curso:</strong> {{curso.owner}}</p>
+                {% block content %}
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                    {% if form %}
+                        <button><i class="fas fa-plus fa-md"></i><a href="" style="font-size: medium;">Participar do curso.</a></button>
+                    {% else %}
+                        <button><i class="fas fa-md"></i><a href="" style="font-size: medium;">Ir para página do curso.</a></button>
+                    {% endif %}
+                </form>
+                {% endblock %}
+                
+            </div>
+        </div>
 
     <!-- <a href="{% url 'registro:check' %}">check</a> -->
 

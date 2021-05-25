@@ -373,7 +373,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
                     record.module=m
                     record.post=p 
                     form.save()
-                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
+                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/'+str(atividade_post_id))
     else:
         form = CommentForm()    
         return render(request, 'addComentario.html',{'form': form, 'atividade_post': p,})

@@ -5,8 +5,8 @@ from .models import Subject, Module, Activity, Post, Content, Image, Text, File,
 
 class CreateCourseForm(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'),label="Área",widget=forms.Select(attrs={'class':'testclass'}))
-    title = forms.CharField(max_length=100)
-    overview = forms.CharField(widget=forms.Textarea)
+    title = forms.CharField(max_length=100, label="Nome")
+    overview = forms.CharField(widget=forms.Textarea, label="Descrição")
 
 class CreateModuleForm(ModelForm):
     class Meta:

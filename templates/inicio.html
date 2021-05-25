@@ -22,7 +22,7 @@
                     <li><i class="fas fa-cog"></i> Configurações</li>
                 </a>
             </ul>
-            <button class="exit-btn"> <a href="{% url 'registro:logout' %}">SAIR</a> </button>
+            <button class="exit-btn" onclick="location.href='{% url 'registro:logout' %}'"> SAIR </button>
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-bars"></i></button>
                 <div class="dropdown-content">
@@ -37,8 +37,8 @@
             <header>
                 <h1>Cursos</h1>
                 <div class="header-buttons">
-                    <a href="{% url 'cursos:buscar-cursos' %}"><button>Buscar curso</button></a>
-                    <a href="{% url 'cursos:criar-curso' %}"><button>Criar curso</button></a>
+                    <button onclick="location.href='{% url 'cursos:buscar-cursos' %}'">Buscar curso</button>
+                    <button onclick="location.href='{% url 'cursos:criar-curso' %}'">Criar curso</button>
                 </div>    
             </header>
             <section>

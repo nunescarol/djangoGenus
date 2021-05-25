@@ -152,7 +152,20 @@ input::-webkit-calendar-picker-indicator {
 #courseOverview{
     height: 7rem;
 }
-
+form p{
+    margin-bottom: 1.25em;
+    display: flex;
+    flex-direction: column;
+}
+form p > select{
+    width: min(90%, 50rem);
+    padding: 0.55em 1em;
+    font-size: 1.225rem;
+}
+form p > :is(input, textarea){
+    padding: 0.55em 1em;
+    font-size: 1.125rem;
+} 
 form button{
     background-color: rgb(255, 167, 85);
     width: 10rem;
@@ -160,7 +173,8 @@ form button{
     border-radius: 20px;
     border: none;
     font-size: 1.25rem;
-    padding: 1em 2em;
+    padding: 0.75em 3em;
+    cursor: pointer;
 }
 
 form button:hover{

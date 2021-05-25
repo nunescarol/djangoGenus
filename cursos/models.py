@@ -106,3 +106,19 @@ class Image(ItemBase):
 
 class Video(ItemBase):
     url = models.URLField()
+
+class Comment(models.Model):
+    post = models.ForeignKey(Module, on_delete=models.CASCADE, related_name="comments")
+    author = models.CharField(max_length=255)
+    #models.ForeignKey(User,related_name='author_id', on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    #approved_comment = models.BooleanField(default=False) 
+        #para moderação no futuro
+
+    #def approve(self):
+    #    self.approved_comment = True
+    #    self.save()
+    def __str__(self):
+        return '%s - %s' % (self.post.title, self.author)
+        #mostrar no admin o post e o comentario associado a ele

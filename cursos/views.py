@@ -10,9 +10,9 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreateActivityForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm
+from .forms import CreateCourseForm, CreateActivityForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm
 
-from .models import Course, Module, Content, Activity, Post
+from .models import Course, Module, Content, Activity, Post, Comment
 from registro.forms import InscricaoCurso
 
 
@@ -20,7 +20,16 @@ from registro.forms import InscricaoCurso
 def inicio(request):
     if request.user.is_authenticated:
         cursos_dono = Course.objects.filter(owner=request.user)
-        cursos_dict = {'dono': cursos_dono}
+        c = Course.objects.all()
+        cursos_matriculado = []
+        for curso in c:
+            if request.user in curso.students.all():
+                cursos_matriculado.append(curso)
+
+        cursos_dict = {'dono': cursos_dono,
+                        'cursos': c,
+                        'matriculado': cursos_matriculado,     
+                    }
         return render(request, 'inicio.html', cursos_dict)
     else:
         return redirect('/')
@@ -57,12 +66,18 @@ def buscar_cursos(request):
         cursos_paginator = Paginator(cursos, 1)
         num_pagina = request.GET.get('paginas')
         paginas = cursos_paginator.get_page(num_pagina)
-        cursos_dict = {
-            'cursos': cursos,
-            'paginas': paginas,
-        }
         
-        return render(request, 'buscarCursos.html', cursos_dict)
+
+        if request.method == 'POST':
+            search = request.POST['search']
+            cursos = Course.objects.filter(Q(title__contains=search) | Q(overview__contains=search) | Q(subject__title__contains=search) | Q(title__contains=search) | Q(owner__username__contains=search))
+            cursos_paginator = Paginator(cursos, 1)
+            num_pagina = request.GET.get('paginas')
+            paginas = cursos_paginator.get_page(num_pagina)
+            print(cursos)
+            return render(request, 'buscarCursos.html', {'cursos': cursos, 'paginas': paginas, 'search': search})
+        
+        return render(request, 'buscarCursos.html', {'cursos': cursos, 'paginas': paginas,})
     else:
         return redirect('/')
 
@@ -223,7 +238,7 @@ def criar_post(request, curso_slug, modulo_id):
     if request.user.is_authenticated:
         if dono:
             if request.method == 'POST':
-                form = CreateActivityForm(request.POST)
+                form = CreatePostForm(request.POST)
                 if form.is_valid():
                     record = form.save(commit=False)
                     record.course=c
@@ -241,11 +256,12 @@ def criar_post(request, curso_slug, modulo_id):
                     return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
             else:
 
-                form = CreateActivityForm()
+                form = CreatePostForm()
             return render(request, 'createPost.html', {'form': form})
         else:
             print("opaopa")
             return redirect('/genus/inicio/')
+
 def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
     if request.user.is_authenticated:
         dono=False
@@ -253,7 +269,18 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
             c = Course.objects.get(slug=curso_slug)
             m = Module.objects.get(pk=modulo_id)
             ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
-            content = Content.objects.filter(module=m)
+            content = Content.objects.filter(module=ap)
+            content_modulo=[]
+            content_estudantes=[]
+            own_resposta=[]
+            for cont in content:
+                if cont.item.owner==c.owner:
+                    content_modulo.append(cont)
+                else:
+                    content_estudantes.append(cont)
+                    if cont.item.owner==request.user:
+                        own_resposta.append(cont)
+
         except Course.DoesNotExist:
             raise Http404("Ops, esse curso não existe")
         except Module.DoesNotExist:
@@ -261,7 +288,7 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
         
         if request.user==c.owner:
             dono=True
-        return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividade_post': ap, 'contents': content})
+        return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'atividade_post': ap, 'contents_modulo': content_modulo, 'respostas_estudantes':content_estudantes, 'respostas': own_resposta})
 
     else:
         return redirect('/')
@@ -285,12 +312,11 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
             m = Module.objects.get(pk=modulo_id)
         except Module.DoesNotExist:
             raise Http404("Ops, esse módulo ou conteudo não existe")
-        
-        if request.user==c.owner:
-            dono=True
-        else:
-            print("voce nao tem permissao para fazer isso.")
-            return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/'+str(atividade_post_id)+'/')
+
+        try:
+            ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
+        except Module.DoesNotExist:
+            raise Http404("Ops, esse módulo ou conteudo não existe")
         
         if request.method == 'POST':
             form1 = EscolhaTipo(request.POST)
@@ -306,7 +332,7 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
                         record.owner=request.user
                         form2.save()
 
-                        Content.objects.create(module=m,item=record)
+                        Content.objects.create(module=ap,item=record)
                         return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/'+str(atividade_post_id)+'/')
                     else:
                         # handle invalid form
@@ -325,6 +351,32 @@ def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
             return render(request, 'addArquivo2.html', {'form1': form1, 'form2': None})
     else:
         return redirect('/')
+
+def adicionar_comentario(request, curso_slug, modulo_id, atividade_post_id):
+    try:
+        c= Course.objects.get(slug=curso_slug)
+        m= Module.objects.get(pk=modulo_id)
+        p= Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
+        # p= Post.objects.get(pk=atividade_post_id)
+        #a= Comment.author = request.user
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse curso não existe")
+    except Course.DoesNotExist:
+        raise Http404("Ops, esse módulo não existe")
+    
+    if request.method == 'POST':
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    record = form.save(commit=False)
+                    record.author = request.user
+                    record.course=c
+                    record.module=m
+                    record.post=p 
+                    form.save()
+                    return redirect('/genus/'+curso_slug+'/'+str(modulo_id)+'/')
+    else:
+        form = CommentForm()    
+        return render(request, 'addComentario.html',{'form': form, 'atividade_post': p,})
 
 
 # def criar_post(request, curso_slug, modulo_id):

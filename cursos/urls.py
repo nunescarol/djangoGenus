@@ -7,6 +7,7 @@ urlpatterns = [
     path('inicio/',views.inicio, name='inicio'),
     path('criar/',views.criar, name='criar-curso'),
     path('cursos/',views.buscar_cursos, name='buscar-cursos'),
+    path('buscar/',views.buscar_cursos, name='buscar'),
     path('<str:curso_slug>/resumo/',views.resumo, name='resumo'),
     path('<str:curso_slug>/',views.curso, name='curso'),
     path('<str:curso_slug>/criar-modulo/',views.criar_modulo, name='criar-modulo'),
@@ -17,6 +18,7 @@ urlpatterns = [
     path('<str:curso_slug>/<int:modulo_id>/criar-post/',views.criar_post, name='criar-post'),  
     path('<str:curso_slug>/<int:modulo_id>/<int:atividade_post_id>/',views.exibir_atividade_post, name='exibir-atividade-post'),
     path('<str:curso_slug>/<int:modulo_id>/<int:atividade_post_id>/adicionar-arquivo/',views.adicionar_arquivo, name='adicionar-arquivo'),
+    path('<str:curso_slug>/<int:modulo_id>/<int:atividade_post_id>/adicionar-comentario/',views.adicionar_comentario, name='adicionar-comentario'),  
     
     
     path('inicio/aaa/', views.teste, name='teste'),

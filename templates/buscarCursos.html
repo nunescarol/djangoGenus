@@ -31,20 +31,35 @@
     <div class="content">
         <header>
             <h1>Buscar Cursos</h1>
+
         </header>
         <section>
             <p>Insira o nome do curso que você procura:</p>
-            <input type="text">
-            <button><i class="fas fa-search"></i>BUSCAR</button>
+            <form action="{% url 'cursos:buscar-cursos' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="search">
+                <button><i class="fas fa-search"></i>BUSCAR</button>
+            </form>
         </section>
         <!--seção páginas de cursos na base de dados, um curso por pagina para teste-->
-        <h1>Cursos disponíveis</h1>
-    <ul class="cursos-query">
-        {% for curso in paginas %}
-        <li><a href="{% url 'cursos:resumo' curso.slug %}">{{curso.title}}</a></li>
-        {% endfor %}
+        
+ 
+        <section class="course-list">
+            <h1>Cursos disponíveis</h1><br>
+             <ul class="cursos-query">
+              {% for curso in paginas %}
+            <li><a href="{% url 'cursos:resumo' curso.slug %}"><h2>{{curso.title}}</h2>
+                <p>{{curso.owner}}</p></a>
+            </li>
+               {% endfor %}
+              </ul>
+            <ul>
+                
+            </ul>
+        </section>
+
         <br><br><div class="pagination">
-            <span class="step-links">
+            <section class="step-links">
                 {% if paginas.has_previous %}
                     <a href="?paginas=1">&laquo; primeira</a>
                     <a href="?paginas={{ page_obj.previous_page_number }}">anterior</a>
@@ -59,34 +74,8 @@
                     <a href="?paginas={{ paginas.next_page_number }}">próxima</a>
                     <a href="?paginas={{ paginas.next_page_number }}">última &raquo;</a>
                 {% endif %}
-            </span>
+            </section>
         </div>
-    </ul>
-    <!-- fim da seção de páginas de cursos
-        nao quis deletar seu codigo, amigo-->
-        <section class="course-list">
-            <ul>
-                <li>
-                    <a href="">
-                        <h2>Sistemas Distribuidos</h2>
-                        <p>Prof. Jairson</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <h2>Cálculo</h2>
-                        <p>Prof. Lino</p>
-                    </a>
-                    
-                </li>
-                <li>
-                    <a href="">
-                        <h2>Historia</h2>
-                        <p>Nome</p>
-                    </a>                     
-                </li>
-            </ul>
-        </section>
     </div>
 </body>
 </html>

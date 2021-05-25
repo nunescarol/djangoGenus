@@ -44,10 +44,11 @@ class AddVideoForm(ModelForm):
         exclude = ['owner', 'created', 'updated']
 
 STATUS_CHOICES = (
-    (1, "Texto"),
-    (2, "Imagem"),
-    (3, "Vídeo"),
-    (4, "Arquivo"),
+    (1, '------------'),
+    (2, "Texto"),
+    (3, "Imagem"),
+    (4, "Vídeo"),
+    (5, "Arquivo"),
 )
 
 class EscolhaTipo(forms.Form):

@@ -145,7 +145,7 @@ ul{
       margin-bottom: 1em;
 
 }
-.owner-answer{
+.buttons-tablet{
     margin-top: 0.5em;
     display: flex;
     flex-direction: row;
@@ -183,6 +183,23 @@ ul{
 .answer ul li{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.nota{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+.nota h2{
+    margin-right: 0.5rem;
+}
+.nota p{
+    font-size: x-large;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    background-color: rgb(255, 1, 1);
+    border-radius: 50%;
 }
 .container-comentarios{
     background: #2F80ED;

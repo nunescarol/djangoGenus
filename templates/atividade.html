@@ -29,7 +29,7 @@
             <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id atividade_post.id %}">Adicionar arquivos</a>
             <hr>
         {% else %}
-            <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id atividade_post.id %}">Entregar atividade</a>
+            <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id atividade_post.id %}">Submeter resposta</a>
             <hr>
         {% endif %}
         {% for content in contents_modulo %}
@@ -39,18 +39,29 @@
         {% endfor %}
 
         {% if dono %}
-            <a href="#">Visualizar todas respostas</a>
+            <a href="{% url 'cursos:exibir-respostas' curso.slug modulo.id atividade_post.id %}">Visualizar todas respostas</a>
         {% else %}
             <h2>Sua resposta:</h2>
-            <hr>
-            {% with total=business.employees.count %}
-            {% endwith %}
+            
+
+            {% if respostas|length == 0 %}
+                <p>Você ainda não submeteu respostas</p>
+
+            {% endif %}
+
             {% for content in respostas %}
                 <ul>
                     <li><a href="">{{content.item.render}}</a></li>
                 </ul>
             {% endfor %}
+            <hr>
         {% endif %}
+
+        {% if not dono %}
+            <h2>Sua nota:</h2>
+            <p>É DEZ</p>
+        {% endif %}
+
     </section>
     
     <section>

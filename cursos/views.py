@@ -294,10 +294,10 @@ def exibir_atividade_post(request, curso_slug, modulo_id, atividade_post_id):
         return redirect('/')
 
 tipo_form = {
-  "1": AddTextForm,
-  "2": AddImageForm,
-  "3": AddVideoForm,
-  "4": AddFileForm,
+  "2": AddTextForm,
+  "3": AddImageForm,
+  "4": AddVideoForm,
+  "5": AddFileForm,
 }
 
 def adicionar_arquivo(request, curso_slug, modulo_id, atividade_post_id):
@@ -442,5 +442,48 @@ def exibir_alunos(request, curso_slug):
         alunos=c.students.all()
         return render(request, 'alunos.html', {'curso': c, 'alunos': alunos})
 
+    else:
+        return redirect('/')
+
+def exibir_respostas(request, curso_slug, modulo_id, atividade_post_id):
+    if request.user.is_authenticated:
+        try:
+            c = Course.objects.get(slug=curso_slug)
+            m = Module.objects.get(pk=modulo_id)
+            ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
+        except Course.DoesNotExist:
+            raise Http404("Ops, esse curso não existe")
+        except Module.DoesNotExist:
+            raise Http404("Ops, esse módulo ou conteudo não existe")
+
+        alunos=c.students.all()
+        return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'atividade_post': ap,'alunos': alunos, 'resposta': None})
+    else:
+        return redirect('/')
+
+def exibir_resposta_de_aluno(request, curso_slug, modulo_id, atividade_post_id, aluno):
+    if request.user.is_authenticated:
+        try:
+            c = Course.objects.get(slug=curso_slug)
+            m = Module.objects.get(pk=modulo_id)
+            ap = Module.objects.get(Q(Activity___pk = atividade_post_id) | Q(Post___pk = atividade_post_id))
+            content = Content.objects.filter(module=ap)
+            resposta=[]
+            for cont in content:
+                if cont.item.owner.username==aluno:
+                    print('entrei')
+                    resposta.append(cont)
+
+        except Course.DoesNotExist:
+            raise Http404("Ops, esse curso não existe")
+        except Module.DoesNotExist:
+            raise Http404("Ops, esse módulo ou conteudo não existe")
+
+        alunos=c.students.all()
+        print(content)
+        print(resposta)
+        print(cont.item.owner)
+        print(aluno)
+        return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'atividade_post': ap,'alunos': alunos, 'resposta': resposta, 'aluno': aluno})
     else:
         return redirect('/')

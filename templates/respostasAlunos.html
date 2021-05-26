@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <section>
+        <h2>Alunos</h2>
+        <ul>
+            {% for aluno in alunos %}
+                <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id atividade_post.id aluno%}">{{aluno}}</a> </li>
+            {% endfor %}
+        </ul>
+        <br>
+    </section>
+
+    <section>
+        {% if not resposta == None %}
+        <h3>Resposta de {{aluno}}: </h3>
+        <a href="">Atribuir nota</a>
+            {% for content in resposta %}
+                <ul>
+                    <li><a href="">{{content.item.render}}</a></li>
+                </ul>
+            {% endfor %}
+        {% endif %}
+    </section>
+    
+  
+</body>
+</html>
+

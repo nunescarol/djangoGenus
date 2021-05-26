@@ -46,9 +46,9 @@
                   {% csrf_token %}
                   {{ form.as_p }}
                     {% if form %}
-                        <button><i class="fas fa-plus fa-md"></i><a href="" style="font-size: medium;">Participar do curso.</a></button>
+                        <button type="submit"><i class="fas fa-plus fa-md"></i><p style="font-size: medium;">Participar do curso.</p></button>
                     {% else %}
-                        <button><i class="fas fa-md"></i><a href="" style="font-size: medium;">Ir para página do curso.</a></button>
+                        <button><i class="fas fa-md"></i><a href="{% url 'cursos:curso' curso.slug %}" style="font-size: medium;">Ir para página do curso.</a></button>
                     {% endif %}
                 </form>
                 {% endblock %}

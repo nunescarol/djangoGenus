@@ -78,15 +78,13 @@ h1{
 }
 
 .overlay{
-    visibility: hidden;
-    position: relative;
+    visibility: visible;
     height: 100%;
     bottom: 0em;
     display: flex;
     flex-direction: row;
     justify-content: center;
     background-color: #2F80ED;
-    transition: .3s ease;
 }
 .overlay ul{
     display: flex;
@@ -103,12 +101,6 @@ h1{
     border: none;
     background-color: rgb(255, 167, 85);
     text-decoration: none;
-}
-
-.out-container:hover .overlay{
-    visibility: visible;
-    bottom: -0.5em;
-    height: 100%;
 }
 
 /*Content*/

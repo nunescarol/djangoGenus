@@ -10,7 +10,7 @@
         <h2>Alunos</h2>
         <ul>
             {% for aluno in alunos %}
-                <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id atividade_post.id aluno%}">{{aluno}}</a> </li>
+                <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id post.id aluno%}">{{aluno}}</a> </li>
             {% endfor %}
         </ul>
         <br>
@@ -19,12 +19,25 @@
     <section>
         {% if not resposta == None %}
         <h3>Resposta de {{aluno}}: </h3>
-        <a href="">Atribuir nota</a>
             {% for content in resposta %}
                 <ul>
                     <li><a href="">{{content.item.render}}</a></li>
                 </ul>
             {% endfor %}
+            <br>
+            <h3>Nota:</h3>
+
+            <p>Nota atual: {{current_grade}}</p> 
+
+            {% block content %}
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="arquivo" value="arquivo">Atribuir nota</button>
+                </form>
+        
+            {% endblock %}
+            <br>
         {% endif %}
     </section>
     

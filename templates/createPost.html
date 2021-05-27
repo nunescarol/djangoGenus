@@ -30,7 +30,11 @@
 </nav>
 <div class="content">
     <header>
+      {% if isActivity == False %}
         <h1>Criar postagem</h1>
+      {% else %}
+        <h1>Criar postagem</h1>
+      {% endif %} 
     </header>
     <section>
       {% block content %}

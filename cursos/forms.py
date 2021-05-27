@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Subject, Module, Activity, Post, Content, Image, Text, File, Video, Comment
+from .models import Subject, Module, Post, Content, Image, Text, File, Video, Comment, Grade
 
 class CreateCourseForm(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'),label="Área",widget=forms.Select(attrs={'class':'testclass'}))
@@ -13,12 +13,6 @@ class CreateModuleForm(ModelForm):
         model = Module
         fields = ['title', 'description']
 
-class CreateActivityForm(ModelForm):
-    title = forms.CharField(max_length= 100, label= "Título")
-    description = forms.CharField(widget=forms.Textarea, label="Descrição")
-    class Meta:
-        model = Activity
-        fields = ['title', 'description']
 
 class CreatePostForm(ModelForm):
     title = forms.CharField(max_length= 100, label= "Título")
@@ -62,6 +56,13 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('text',)
+
+class GradeForm(forms.ModelForm):
+    grade = forms.DecimalField(widget=forms.NumberInput(attrs={'min':"0",'max': "10", 'step':'0.05'}))
+
+    class Meta:
+        model = Grade
+        fields = ('grade',)
 
 # class CreateActivityAdminForm(ModelForm):
 #     class Meta:

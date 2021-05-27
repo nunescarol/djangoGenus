@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from polymorphic.models import PolymorphicModel
+from django.core.validators import MaxValueValidator
 
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -60,21 +61,30 @@ class Module(PolymorphicModel):
 
 class Post(Module):
     module = models.ForeignKey(Module,related_name='posts', on_delete=models.CASCADE)
+    isActivity = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
 
-class Activity(Module):
-    module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
-    grade = models.FloatField(blank=True, null=True)
+# class Activity(Module):
+#     module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
+#     grade = models.FloatField(blank=True, null=True)
+
+#     def __str__(self):
+#         return self.title
+
+class Grade(models.Model):
+    grade = models.DecimalField(blank=True, max_digits=4, decimal_places=2, validators=[MaxValueValidator(10)], default=None)
+    module = models.ForeignKey(Module,related_name='grades', on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return str(self.grade)
 
 
 class Content(models.Model):
     module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in':('text', 'video', 'image', 'file')}, on_delete=models.DO_NOTHING)
+    content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in':('text', 'video', 'image', 'file')}, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey('content_type', 'object_id')
 

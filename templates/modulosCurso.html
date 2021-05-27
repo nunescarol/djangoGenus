@@ -3,45 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/modulosCursostyle.css' %}">
+    <title>Genus</title>
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>{{curso.title}}</h1>
-    
-    <nav>
-        <ul>
-            <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
-            <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
-            <li><a href="">Alunos</a></li>
-            {% if dono %}
-                <li><a href="">Configurações</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-        
-    <section>
-        <h1>Módulos e atividades</h1>
-        {% if dono %}
-            <a href="{% url 'cursos:criar-modulo' curso.slug %}">Criar módulo</a>
-        {% endif %}
-        <div class="content-container">
-            <ul>
-                {% for modulo in modulos %}
-                <li><a href="{% url 'cursos:exibir-modulo' curso.slug modulo.id %}">{{modulo.title}}</a>
-                    {% for ap in atividades_posts %}
-                        {% if ap.module == modulo %}
-                            <ul>
-                                <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a></li>
-                            </ul>
-                        {% endif %} 
-                    {% endfor %}
-                </li>
-                {% endfor %}
-            </ul>
-        
+    <header>
+        <div class="out-container">
+            <img src="../static/images/logo.svg" alt="Genus Logo">
+            <nav class="overlay">
+                 <ul>
+                    <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
+                    <li><a href="">Alunos</a></li>
+                    {% if dono %}
+                        <li><a href="">Configurações</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+              
         </div>
 
-    </section>
+    </header>
+        
+    <div class="content-box">
+        <h1>{{curso.title}}</h1>
+
+        <h1>Módulos e atividades</h1>
+        <div class="button-header">
+            <!-- {% if dono %} -->
+                <button><a href="{% url 'cursos:criar-modulo' curso.slug %}"><i class="fas fa-plus fa-md"></i> Criar módulo</a></button>
+            <!-- {% endif %} -->
+        </div>
+
+        <div class="modulo-container">
+            <ul>
+                {% for modulo in modulos %}
+                    <li>
+                        <section class="modulo">
+
+                            <div class="content-container">
+
+                                <h2><a href="{% url 'cursos:exibir-modulo' curso.slug modulo.id %}">{{modulo.title}}</a></h2> 
+                                        
+                                        <div class="atividades">
+                                            {% for ap in atividades_posts %}
+                                                {% if ap.module == modulo %}
+                                                    <ul class="atividades-container">
+                                                        {% for ap in atividades_posts %}
+                                                            <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a> </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                {% endif %} 
+                                            {% endfor %}
+                                        </div>
+                            </div>
+                        </section>
+                    </li>
+                
+                {% endfor %}
+                
+            </ul>
+        </div>
+        
+    </div>
     
 
     <!-- <a href="{% url 'registro:check' %}">check</a> -->

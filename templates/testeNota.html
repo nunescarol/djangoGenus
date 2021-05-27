@@ -7,16 +7,11 @@
 </head>
 <body>
   {% block content %}
-  {% if isActivity == False %}
-    <h2>Criar postagem</h2>
-  {% else %}
-    <h2>Criar atividade</h2>
-  {% endif %}  
+  <h2>Form Nota</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ redirect }}">
-    <button type="submit">Criar</button>
+    <button type="submit">Sign up</button>
   </form>
   {% endblock %}
   

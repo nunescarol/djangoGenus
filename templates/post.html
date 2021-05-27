@@ -35,38 +35,6 @@
         {% endfor %}
         <hr>
     </section>    
-    
-    <section>
-        {% if dono %}
-            <h2>Respostas:</h2>
-            <a href="{% url 'cursos:exibir-respostas' curso.slug modulo.id post.id %}">Visualizar todas respostas</a>
-        {% else %}
-            <h2>Sua resposta:</h2>
-            <a href="{% url 'cursos:adicionar-arquivo' curso.slug modulo.id post.id %}">Submeter resposta</a>
-
-            {% if respostas|length == 0 %}
-                <p>Você ainda não submeteu respostas</p>
-
-            {% endif %}
-
-            {% for content in respostas %}
-                <ul>
-                    <li><a href="">{{content.item.render}}</a></li>
-                </ul>
-            {% endfor %}
-            <hr>
-        {% endif %}
-    
-    </section>
-    
-    <section>
-
-        {% if not dono %}
-            <h2>Sua nota:</h2>
-            <p>É DEZ</p>
-        {% endif %}
-
-    </section>
 
     <hr>
     <section>

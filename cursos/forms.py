@@ -13,8 +13,10 @@ class CreateModuleForm(ModelForm):
         model = Module
         fields = ['title', 'description']
 
-class CreatePostForm(ModelForm):
 
+class CreatePostForm(ModelForm):
+    title = forms.CharField(max_length= 100, label= "Título")
+    description = forms.CharField(widget=forms.Textarea, label="Descrição")
     class Meta:
         model = Post
         fields = ['title', 'description']

@@ -75,13 +75,13 @@
             <div class="comentarios">
                 <div>
     
-                    {% if not atividade_post.comments.all %}
+                    {% if not post.comments.all %}
                          <h2>Sem Comentários</h2>
                             <div class="buttons-comentarios">
                                 <button> <a href="{% url 'cursos:adicionar-comentario' curso.slug modulo.id post.id %}">Adicionar Comentário</a></button>
                              </div>
                     {% else %}
-                        {% for comment in atividade_post.comments.all %}
+                        {% for comment in post.comments.all %}
                             <div class="infoUser">
                                 <h2>{{ comment.author }}</h2> 
                                 <p>{{ comment.created_date}}</p>

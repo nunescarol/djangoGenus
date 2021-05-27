@@ -1,20 +1,49 @@
+
+{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'css/cadastroStyle.css' %}">
+  <title>Cadastro</title>
 </head>
 <body>
-  {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
-  </form>
-  {% endblock %}
   
+  <div class="out-container">
+    <div class="container">
+        <header>
+            <img src="../static/images/logo.svg" alt="Genus Logo">
+            <a href="{% url 'registro:login' %}"><button>INICIO</button></a>
+        </header>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="cadastro">
+      <h2>Cadastro</h2>
+      {% block content %}
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Cadastrar</button>
+      </form>
+      {% endblock %}
+    </div>
+
+  </div>
+  
+  <div class="footer">
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+  </div>
 </body>
 </html>
+
 

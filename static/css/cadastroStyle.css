@@ -1,0 +1,143 @@
+/*Gerais*/
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    background-color: green;
+    background: url(../images/bgimg2.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+
+}
+button{
+    padding: 0.75em 2em;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(255, 167, 85);
+    cursor: pointer;
+}
+
+
+/*Conteudo*/
+.out-container{
+    width: 100%;
+    background-color: #2F80ED;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+}
+.container{
+    width: 60%;
+}
+header{
+    height: 4em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 1.5em;
+}
+
+header img{
+    height: 2.4em;
+}
+
+.content-box{
+    margin-top: 5em;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+}
+.content-box form{
+    display: flex;
+    flex-direction: column;
+}
+
+.cadastro{
+    border-radius: 10px;
+    padding: 1em;
+    width: min(80%, 40rem);
+    background-color: rgba(255, 167, 85, 0.9);
+    display: flex;
+    flex-direction: column;
+}
+
+.cadastro input{
+    border-radius: 10px;
+    border: none;
+    padding: 1em 2em;
+    width: 100%;
+    margin: 1em 0;
+}
+.cadastro p{
+    font-weight: bold;
+    margin-bottom: 1.5em;
+    text-align: left;
+
+}
+form p > label{
+    font-size: 1.25rem;
+}
+.cadastro p a:hover{
+    color:  #3e8cf3;
+}
+
+.cadastro h2{
+    font-size: 2rem;
+   text-align: center;
+}
+.cadastro button{
+    width: 50%;
+    font-weight: bold;
+    font-size: 1rem;
+    align-self: center;
+    background-color: #2F80ED;
+}
+.cadastro button:hover{
+    background-color: #3e8cf3;
+}
+
+
+/*footer*/
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+}
+.footer ul{ 
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    border-radius: 10px;
+    padding: 1.5em;
+    background-color:#2F80ED ;
+}
+.footer ul li{ 
+    margin: 0.5em 0 0.5em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 650px ){
+    .content-box, .container{
+        width: 90%;
+    }
+    .content-box{
+        align-self: center;
+        width: 100%;
+    }
+}

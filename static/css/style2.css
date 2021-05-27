@@ -6,7 +6,6 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: green;
     background: url(../images/bgimg2.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -66,8 +65,8 @@ button:hover{
 .content-box{
     margin-right: 0;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    
     justify-content: space-around;
     align-items: center;
     height: calc(100vh - 120px);
@@ -81,7 +80,7 @@ button:hover{
   
 }
 .content-box >a {
-    align-self: flex-end;
+    align-self: center;
 }
 .text{
     display: flex;
@@ -104,39 +103,34 @@ button:hover{
     border-radius: 10px;
     padding: 1em;
     /*margin: auto;*/
-    height: 500px;
     width: 400px;
     background-color: rgba(255, 167, 85, 0.9);
     display: flex;
     flex-direction: column;
 }
 .sign-up h1{
-    margin-bottom: 1em;
+    font-size: 2.5rem;
+    margin-bottom: 0.5em;
     text-align: center;
 }
 
-.sign-up input{
-    border-radius: 10px;
-    border: none;
-    padding: 1em 2em;
-    width: 90%;
+.sign-up p{
+    font-size: 1.7rem;
+    text-align: justify;
     margin-bottom: 1em;
 }
-form{
-    display: flex;
-    flex-direction: column;
-}
-form label{
-    font-weight: bold;
-}
 
-form button{
-    width: 50%;
+.signup-link{
     align-self: center;
     background-color: #2F80ED;
+    font-size: 1.5rem;
+    color: rgb(255, 167, 85);
+    text-decoration: none;
+    padding: 1em 2em;
+    border-radius: 20px;
 }
-form button:hover{
-    background-color: #3e8cf3;
+.signup-link:hover{
+    background-color: #1f67c5;
 }
 @media screen and (max-width: 1350px ){
     .text{

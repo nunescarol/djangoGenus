@@ -497,12 +497,11 @@ def exibir_resposta_de_aluno(request, curso_slug, modulo_id, post_id, aluno):
                     g.save()
                 form = GradeForm() 
 
-                return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'post': p,'alunos': alunos, 'resposta': resposta, 'aluno': aluno, 'form':form, 'current_grade':g})
+                return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'post': p,'alunos': alunos, 'resposta': resposta, 'aluno': aluno, 'form':form, 'current_grade':str(g)})
 
         else:
             form = GradeForm()
-        print(g)
-        return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'post': p,'alunos': alunos, 'resposta': resposta, 'aluno': aluno, 'form':form, 'current_grade':g})
+        return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'post': p,'alunos': alunos, 'resposta': resposta, 'aluno': aluno, 'form':form, 'current_grade':str(g)})
     else:
         return redirect('/')
 

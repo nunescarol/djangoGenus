@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Subject, Module, Post, Content, Image, Text, File, Video, Comment, Grade
+from .models import Subject, Module, Post, Content, Image, Text, File, Video, Comment, Grade, MensagemMural
 
 class CreateCourseForm(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'),label="Área",widget=forms.Select(attrs={'class':'testclass'}))
@@ -64,6 +64,10 @@ class GradeForm(forms.ModelForm):
         model = Grade
         fields = ('grade',)
 
+class MensagemMuralForm(forms.ModelForm):
+    class Meta:
+        model = MensagemMural
+        fields = ('text',)
 # class CreateActivityAdminForm(ModelForm):
 #     class Meta:
 #         model = Activity

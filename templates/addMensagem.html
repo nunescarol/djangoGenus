@@ -30,14 +30,14 @@
 </nav>
 <div class="content">
     <header>
-        <h1>Adicionar comentário</h1>
+        <h2>adicionar mensagem ao mural</h2>
     </header>
     <section>
       {% block content %}
-      <form method="post" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Criar</button>
+        {{ form }}
+        <button type="submit">enviar</button>
       </form>
       {% endblock %}
     </section>

@@ -22,7 +22,8 @@ urlpatterns = [
     path('<str:curso_slug>/<int:modulo_id>/<int:post_id>/adicionar-comentario/',views.adicionar_comentario, name='adicionar-comentario'), 
     path('<str:curso_slug>/<int:modulo_id>/<int:post_id>/respostas/',views.exibir_respostas, name='exibir-respostas'),
     path('<str:curso_slug>/<int:modulo_id>/<int:post_id>/respostas/<str:aluno>',views.exibir_resposta_de_aluno, name='exibir-resp-aluno'),
-
+    path('<str:curso_slug>/mural/',views.mural, name='mural'),
+    path('<str:curso_slug>/mural/adicionar-comentario/',views.adicionar_mensagem_mural, name='adicionar-mensagem'),
     
     
     path('inicio/aaa/', views.teste_formnota, name='teste'),

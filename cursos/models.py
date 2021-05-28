@@ -132,3 +132,12 @@ class Comment(models.Model):
     def __str__(self):
         return '%s - %s' % (self.post.title, self.author)
         #mostrar no admin o post e o comentario associado a ele
+class MensagemMural(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='mensagens')
+    author = models.CharField(max_length=255)
+    text = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return '%s - %s' % (self.course.title, self.author)
+        #mostrar no admin o curso e o comentario_mural associado a ele

@@ -10,7 +10,7 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm, GradeForm
+from .forms import CreateCourseForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm, GradeForm, MensagemMuralForm
 
 from .models import Course, Module, Content, Post, Comment, Grade
 from registro.forms import InscricaoCurso
@@ -119,9 +119,11 @@ def curso(request, curso_slug):
             c= Course.objects.get(slug=curso_slug)
         except Course.DoesNotExist:
             raise Http404("Encontramos um erro")
+        
         if(request.user==c.owner):
             dono=True
-        return render(request, 'muralCurso.html', {'curso':c, 'dono': dono})
+
+        return render(request, 'homeCurso.html', {'curso':c, 'dono': dono})
     else:
         return redirect('/')
 
@@ -169,7 +171,6 @@ def criar_modulo(request, curso_slug):
     else:
         return redirect('/')
 
-
 def exibir_modulo(request, curso_slug, modulo_id):
     if request.user.is_authenticated:
         dono=False
@@ -189,7 +190,6 @@ def exibir_modulo(request, curso_slug, modulo_id):
 
     else:
         return redirect('/')
-
 
 def criar_post(request, curso_slug, modulo_id):
     dono=False
@@ -351,8 +351,7 @@ def adicionar_comentario(request, curso_slug, modulo_id, post_id):
         c= Course.objects.get(slug=curso_slug)
         m= Module.objects.get(pk=modulo_id)
         p= Module.objects.get(Q(Post___pk = post_id))
-        # p= Post.objects.get(pk=atividade_post_id)
-        #a= Comment.author = request.user
+
     except Course.DoesNotExist:
         raise Http404("Ops, esse curso não existe")
     except Course.DoesNotExist:
@@ -371,6 +370,45 @@ def adicionar_comentario(request, curso_slug, modulo_id, post_id):
     else:
         form = CommentForm()    
         return render(request, 'addComentario.html',{'form': form, 'post': p,})
+
+def mural(request, curso_slug):
+    if request.user.is_authenticated:
+        dono=False
+        try:
+            c= Course.objects.get(slug=curso_slug)
+        except Course.DoesNotExist:
+            raise Http404("Encontramos um erro")
+        
+        if(request.user==c.owner):
+            dono=True
+
+        return render(request, 'muralCurso.html', {'curso':c, 'dono': dono})
+    else:
+        return redirect('/')
+
+def adicionar_mensagem_mural(request, curso_slug):
+    try:
+        c= Course.objects.get(slug=curso_slug)
+    except Course.DoesNotExist:
+        raise Http404("Encontramos um erro")
+    
+    if request.method == 'POST':
+        form = MensagemMuralForm(request.POST)
+        print(request.POST)
+            
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.author = request.user
+            record.course = c
+            form.save()
+            print("salvou")
+            return redirect('/genus/'+curso_slug+'/mural/')
+
+    else:
+        print("nao entrou em POST")
+        form = MensagemMuralForm()
+        return render(request, 'addMensagem.html', {'curso':c, 'form': form})
+
 
 
 # def criar_post(request, curso_slug, modulo_id):

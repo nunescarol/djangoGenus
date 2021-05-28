@@ -122,8 +122,23 @@ def curso(request, curso_slug):
         
         if(request.user==c.owner):
             dono=True
+        if request.method == 'POST':
+            form = MensagemMuralForm(request.POST)
+            print(request.POST)
+                
+            if form.is_valid():
+                record = form.save(commit=False)
+                record.author = request.user
+                record.course = c
+                form.save()
+                print("salvou")
+                return render(request, 'homeCurso.html', {'curso':c, 'form': form})
 
-        return render(request, 'homeCurso.html', {'curso':c, 'dono': dono})
+        else:
+            print("nao entrou em POST")
+            form = MensagemMuralForm()
+            return render(request, 'homeCurso.html', {'curso':c, 'form': form})
+
     else:
         return redirect('/')
 

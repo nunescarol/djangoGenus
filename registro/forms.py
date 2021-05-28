@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from cursos.models import Course
 
 class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(label='First Name', max_length=150)
-    last_name = forms.CharField(label='Last Name', max_length=150)
+    first_name = forms.CharField(label='Nome', max_length=150)
+    last_name = forms.CharField(label='Sobrenome', max_length=150)
     email = forms.EmailField(label='Email')
 
     class Meta:

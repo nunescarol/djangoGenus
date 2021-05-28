@@ -65,6 +65,9 @@ class GradeForm(forms.ModelForm):
         fields = ('grade',)
 
 class MensagemMuralForm(forms.ModelForm):
+                       
+    text = forms.CharField(label="",widget=forms.Textarea(attrs={'class':'testclass', 'id':'message', 'name':'message','placeholder':'Deixe um recado para a turma...', 'onclick':'messageText()'}))
+
     class Meta:
         model = MensagemMural
         fields = ('text',)

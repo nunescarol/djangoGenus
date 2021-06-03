@@ -54,17 +54,11 @@
         </div>
 
     </header>
-
-    <!-- <div class="content-container">
+    <!-- <h2>Mural</h2>
+    <div class="content-container">
     
         <h2>Mural</h2>
         <hr>
-        <div class="mural-posts">
-            <p>Teste</p>
-            <hr>
-            <p>Teste</p>
-            <hr>
-        </div>
     </div> -->
   
     <div class="container">
@@ -72,53 +66,40 @@
             <h1>{{curso.title}}</h1>
         </div>
         <div class="content-container">
-            
-            {% if not curso.mensagens.all %}
-                         <h2>sem mensagens no mural</h2>
-                            <div class="buttons-mensagem">
-                                <button> <a href="{% url 'cursos:adicionar-mensagem' curso.slug%}">adicionar mensagem</a></button>
-                             </div>
-                    {% else %}
-                    <button><a href="{% url 'cursos:adicionar-mensagem' curso.slug%}">adicionar mensagem</a></button><br/>
+            <div class="card">
+                {% block content %}
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}               
+                    {{ form.as_p }}    
+                    <button type="submit" onclick="adicionar_mensagem_mural()">Postar</button>
+                </form>
+                {% endblock %}  
+                    
                         
-                    {% for mensagem in curso.mensagens.all %}
-                    <div class="card">
-                        <div class="card-header">
-                            <h1><i class="far fa-user fa-sm"></i></h1>
-                            <div class="info">
-                                <div class="infoUser">
-                                    <span><b>{{ mensagem.author }}</b></span>
-                                    <span><b><i>{{ mensagem.created_date }}</i> </b></span>
-                                </div>
-                                <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p>{{ mensagem.text }}</p>
-                        </div>
-                    </div>
-                        {% endfor %}
-                            <div class="buttons-mensagem">
-                                <!-- <button><a href="{% url 'cursos:adicionar-mensagem' curso.slug%}">adicionar mensagem</a></button> -->
-                            </div>      
-                    {% endif %}
-
-            <!-- <div class="card">
+                   <!-- <div class="groupbtn" id="group1">
+                        <button type="submit" onclick="adicionar_mensagem_mural()">Postar</button>
+                       <button type="button" onclick="cancelMessage()"> Cancelar</button>
+                   </div> -->
+               </form>
+            </div>
+            {% for mensagem in curso.mensagens.all %}
+            <div class="card">
                 <div class="card-header">
                     <h1><i class="far fa-user fa-sm"></i></h1>
                     <div class="info">
                         <div class="infoUser">
-                            <span><b>User Name</b></span>
-                            <span><b><i>18/05/2021</i> </b></span>
+                            <span><b>{{ mensagem.author }}</b></span>
+                            <span><b><i>{{ mensagem.created_date }}</i> </b></span>
                         </div>
                         <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
                     </div>
                 </div>
                 <div class="card-content">
-                    <p>Notas no siga</p>
+                    <p>{{ mensagem.text }}</p>
                 </div>
             </div> 
-            <div class="card">
+            {% endfor %}
+            <!-- <div class="card">
                 <div class="card-header">
                     <h1><i class="far fa-user fa-sm"></i></h1>
                     <div class="info">
@@ -151,7 +132,8 @@
         </div>
     </div>
 
+ <a href="{% url 'registro:check' %}">check</a>
+<body>
 
-    <!-- <a href="{% url 'registro:check' %}">check</a> -->
 </body>
 </html>

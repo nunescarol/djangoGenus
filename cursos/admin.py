@@ -5,7 +5,7 @@ from django.db.models import Q
 
 
 from django.contrib import admin
-from .models import Subject, Course, Module, Activity, Image, Content, Text, Video
+from .models import Subject, Course, Module, Image, Content, Text, Video, Grade
 
 @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
@@ -15,15 +15,12 @@ class SubjectAdmin(admin.ModelAdmin):
 class ModuleInline(admin.StackedInline):
     model = Module
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        # if request.user.is_superuser:
-        #     return qs
-        # ModelA.objects.not_instance_of(ModelB [, ModelC ...])
-        return qs.filter( Q(not_instance_of=Activity) )
-
-class ActivityInline(admin.StackedInline):
-    model = Activity
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     # if request.user.is_superuser:
+    #     #     return qs
+    #     # ModelA.objects.not_instance_of(ModelB [, ModelC ...])
+    #     return qs.filter( Q(not_instance_of=Activity) )
 
 
 @admin.register(Course)
@@ -32,7 +29,11 @@ class CourseAdmin(admin.ModelAdmin):
     list_filter = ['created', 'subject']
     search_fields = ['title', 'overview']
     prepopulated_fields = {'slug': ('title',)}
-    inlines = [ModuleInline, ActivityInline]
+    inlines = [ModuleInline]
+
+@admin.register(Grade)
+class GradeAdmin(admin.ModelAdmin):
+    list_display = ['student', 'module', 'grade']
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):

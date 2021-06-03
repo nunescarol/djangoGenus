@@ -16,7 +16,7 @@
             <img src="../../static/images/logo.svg" alt="Genus Logo">
             <ul>
                 <a href="">
-                    <li> <i class="far fa-user-circle"></i>Perfil </li>
+                    <a href="{% url 'cursos:perfil' %}"><li> <i class="far fa-user-circle"></i>Perfil </li></a>
                 </a>
                 <a href="">
                     <li><i class="fas fa-cog"></i> Configurações</li>
@@ -63,7 +63,7 @@
                     {% for curso in matriculado %}
                    
                         <div class="course-box">
-                            <a href="">
+                            <a href="{% url 'cursos:resumo' curso.slug %}">
                             <img src="https://i.pinimg.com/originals/de/f6/96/def69643889ee29e232637646e839064.jpg" alt=""></a>
                             <h3>{{curso.title}}</h3>
                             <p>{{curso.overview}}</p>

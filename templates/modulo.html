@@ -13,7 +13,7 @@
             <img src="../static/images/logo.svg" alt="Genus Logo">
             <nav class="overlay">
                  <ul>
-                    <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:mural' curso.slug%}">Mural</a></li>
                     <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
                     <li><a href="">Alunos</a></li>
                     {% if dono %}
@@ -57,8 +57,8 @@
                 <div class="atividades">
                         <h2>Atividades e Posts</h2>
                         <ul>
-                            {% for ap in atividades_posts %}
-                                <li><a href="{% url 'cursos:exibir-atividade-post' curso.slug modulo.id ap.id %}">{{ap}}</a> </li>
+                            {% for p in posts %}
+                                <li><a href="{% url 'cursos:exibir-post' curso.slug modulo.id p.id %}">{{p}}</a> </li>
                             {% endfor %}
                         </ul>
                 </div>

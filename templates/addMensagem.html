@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/createPostStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addComentarioStyle.css' %}">
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 </head>
 <body>
   <nav>
-    <img src="../../../../static/images/logo.svg" alt="Genus Logo">
+    <img src="../../../../../static/images/logo.svg" alt="Genus Logo">
     <ul>
         <a href="#"><li><i class="far fa-user-circle"></i>Perfil</li></a> 
         <a href=""><li><i class="fas fa-cog"></i> Configurações</li></a>
@@ -30,19 +30,14 @@
 </nav>
 <div class="content">
     <header>
-      {% if isActivity == False %}
-        <h1>Criar postagem</h1>
-      {% else %}
-        <h1>Criar postagem</h1>
-      {% endif %} 
+        <h2>adicionar mensagem ao mural</h2>
     </header>
     <section>
       {% block content %}
-      <form method="post">
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="hidden" name="next" value="{{ redirect }}">
-        <button type="submit">Criar</button>
+        {{ form }}
+        <button type="submit">enviar</button>
       </form>
       {% endblock %}
     </section>
@@ -50,5 +45,4 @@
 </div>
 </body>
 </html>
-
 

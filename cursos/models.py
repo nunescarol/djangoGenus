@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from polymorphic.models import PolymorphicModel
+from django.core.validators import MaxValueValidator
 
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -13,6 +14,8 @@ from .fields import OrderField
 User._meta.get_field('email')._unique = True
 User._meta.get_field('email').blank = False
 User._meta.get_field('email').null = False
+
+# User._meta.get_field('username')._unique = True
 
 class Subject(models.Model):
     title = models.CharField(max_length=200)
@@ -60,21 +63,30 @@ class Module(PolymorphicModel):
 
 class Post(Module):
     module = models.ForeignKey(Module,related_name='posts', on_delete=models.CASCADE)
+    isActivity = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
 
-class Activity(Module):
-    module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
-    grade = models.FloatField(blank=True, null=True)
+# class Activity(Module):
+#     module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
+#     grade = models.FloatField(blank=True, null=True)
+
+#     def __str__(self):
+#         return self.title
+
+class Grade(models.Model):
+    grade = models.DecimalField(blank=True, max_digits=4, decimal_places=2, validators=[MaxValueValidator(10)], default=None)
+    module = models.ForeignKey(Module,related_name='grades', on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return str(self.grade)
 
 
 class Content(models.Model):
     module = models.ForeignKey(Module, related_name='contents', on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in':('text', 'video', 'image', 'file')}, on_delete=models.DO_NOTHING)
+    content_type = models.ForeignKey(ContentType, limit_choices_to={'model__in':('text', 'video', 'image', 'file')}, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey('content_type', 'object_id')
 
@@ -122,3 +134,17 @@ class Comment(models.Model):
     def __str__(self):
         return '%s - %s' % (self.post.title, self.author)
         #mostrar no admin o post e o comentario associado a ele
+
+class MensagemMural(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='mensagens')
+    author = models.CharField(max_length=255)
+    text = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return '%s - %s' % (self.course.title, self.author)
+    
+    class Meta:
+        ordering = ('-created_date',)
+    
+        #mostrar no admin o curso e o comentario_mural associado a ele

@@ -37,8 +37,7 @@
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="hidden" name="next" value="{{ redirect }}">
-        <button type="submit" name="teste" value="teste">Criar</button>
+        <button type="submit">Criar</button>
       </form>
       {% endblock %}
     </section>

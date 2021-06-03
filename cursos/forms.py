@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 
 from .models import Subject, Module, Post, Content, Image, Text, File, Video, Comment, Grade, MensagemMural
+from django.contrib.auth.models import User
 
 class CreateCourseForm(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.order_by('title'),label="Área",widget=forms.Select(attrs={'class':'testclass'}))
@@ -71,6 +72,24 @@ class MensagemMuralForm(forms.ModelForm):
     class Meta:
         model = MensagemMural
         fields = ('text',)
+
+class PerfilForm(forms.Form):
+    username = forms.CharField(label='Nome de usuário', max_length=150,required=False)
+    first_name = forms.CharField(label='Nome', max_length=150,required=False)
+    last_name = forms.CharField(label='Sobrenome', max_length=150,required=False)
+    # email = forms.EmailField(label='Email',required=False)
+
+    class Meta:
+        fields = ['username', 'first_name', 'last_name']
+
+class PasswordChange(forms.Form):
+    current_password = forms.CharField(max_length=128, label="Senha atual", widget=forms.PasswordInput)
+    new_password1 = forms.CharField(max_length=128, label="Nova senha", widget=forms.PasswordInput)
+    new_password2 = forms.CharField(max_length=128, label="Confirmação da nova senha", widget=forms.PasswordInput)
+
+    class Meta:
+        fields = ['password']
+
 # class CreateActivityAdminForm(ModelForm):
 #     class Meta:
 #         model = Activity

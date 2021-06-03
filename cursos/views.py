@@ -10,7 +10,8 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm, GradeForm, MensagemMuralForm
+from .forms import CreateCourseForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm, GradeForm, MensagemMuralForm, PerfilForm, PasswordChange
+from django.contrib.auth.models import User
 
 from .models import Course, Module, Content, Post, Comment, Grade
 from registro.forms import InscricaoCurso
@@ -111,6 +112,72 @@ def resumo(request, curso_slug):
             return render(request, 'resumoCurso.html', {'curso':c, 'form': form})
     else:
         return redirect('/')
+
+def perfil(request):
+    if request.user.is_authenticated:
+        try:
+            u= User.objects.get(username=request.user.username)
+        except User.DoesNotExist:
+            raise Http404("Encontramos um erro")
+        
+        if request.method == 'POST':
+            form = PerfilForm(request.POST)
+            print(form.errors)
+            if form.is_valid():
+                if u.username != form.cleaned_data['username']:
+                   u.username = form.cleaned_data['username']
+                if u.first_name != form.cleaned_data['first_name']:
+                   print(form.cleaned_data)
+                   u.first_name = form.cleaned_data['first_name']
+                if u.last_name != form.cleaned_data['last_name']:
+                   u.last_name = form.cleaned_data['last_name']
+                u.save()
+            else:
+                print("teste")               
+            return redirect('/genus/perfil/')
+            
+        else:
+            form = PerfilForm(initial={'username':request.user.username, 'first_name':request.user.first_name, 'last_name':request.user.last_name, 'email':request.user.email})
+            
+            return render(request, 'perfil.html', {'form': form})
+    else:
+        return redirect('/')
+
+        
+
+def mudar_senha(request):
+    if request.user.is_authenticated:
+        u = get_object_or_404(User, id=request.user.id)
+        if request.method == 'POST':
+            form=PasswordChange(request.POST)
+            message="Senha modificada com sucesso"
+            if form.is_valid():
+                if form.cleaned_data['new_password1']!=form.cleaned_data['new_password1']:
+                    message="O campo de confirmação de senha deve coincidir com a nova senha fornecida"
+                else:
+                    print(form.cleaned_data['current_password'])
+                    print(u.check_password(form.cleaned_data['current_password']))
+                    if u.check_password(form.cleaned_data['current_password']):
+                        u.set_password(form.cleaned_data['new_password1'])
+                        u.save()
+                    else:
+                        message="Senha incorreta"
+            print(message)
+            return redirect('/genus/perfil/')
+        else:
+            form = PasswordChange()
+            return render(request, 'mudarSenha.html', {'form': form})
+    else:
+        return redirect('/')
+
+def excluir_conta(request):
+    if request.user.is_authenticated:
+        u = get_object_or_404(User, id=request.user.id)
+        u.delete()
+    else:
+       return redirect('/')
+    return redirect('/')
+    
 
 def curso(request, curso_slug):
     if request.user.is_authenticated:

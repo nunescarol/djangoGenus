@@ -1,0 +1,250 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(248, 246, 245);
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+
+}
+button{
+    cursor: pointer;
+    padding: 0.75em 2em;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(255, 167, 85);
+}
+a{
+    font-weight: bold;
+    text-decoration: none;
+}
+button:hover{
+    background-color: rgb(255, 152, 57);
+}
+ul{
+    list-style: none;
+}
+
+/* Header */
+.out-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 6em;
+    width: 100%;
+    background-color: #2F80ED;
+}
+.out-container img{
+    height: 4.5em;
+}
+
+.overlay{
+    visibility: visible;
+    height: 100%;
+    bottom: 0em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #2F80ED;
+    
+}
+.overlay ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+.overlay ul li a{
+    color: rgb(84, 6, 158);
+    font-weight: bold;
+    display: block;
+    margin: 5px;
+    padding: 7px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(255, 167, 85);
+    text-decoration: none;
+}
+
+/* Content */
+.content-box{
+    height: 100%;
+    margin-top: 2em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-box h1{
+    text-align: center;
+    font-size: xx-large;
+}
+.alunos{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.alunos-card{
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #ebdfdf;
+    padding: 20px;
+    width: 80%;
+    margin: 0 1rem 0 1rem;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #b6b5b5 ;
+    box-shadow: 5px 5px 5px rgb(34, 34, 34); 
+}
+.alunos-card li{
+   margin-left: 1rem;
+   margin-bottom: 1rem;
+}
+
+.answer{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: flex-start;
+    margin-bottom: 2px;
+}
+.answer-card{
+    margin: 1rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: #ebdfdf;
+    padding: 20px;
+    width: 30%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #b6b5b5 ;
+    box-shadow: 5px 5px 5px rgb(34, 34, 34); 
+}
+.student-answer{
+    width: 100%;
+}
+
+.content-item{
+    /* Break Line */
+    -ms-word-break: break-all;
+    word-break: break-all;
+    /* Non standard for WebKit */
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.content-item li{
+   margin-left: 20px;
+}
+.content-item li p{
+   max-height: 100%;
+   max-width: 100%;
+}
+.content-item li a{
+    min-width: 150px;
+    min-height: 150px;
+   max-height: 150px;
+   max-width: 150px;
+}
+.content-item li img{
+    min-width: 150px;
+    min-height: 150px;
+   max-height: 150px;
+   max-width: 150px;
+}
+.content-item li video {
+    min-width: 150px;
+    min-height: 150px;
+   max-height: 150px;
+   max-width: 150px;
+}
+/* Formulário */
+.Nota{
+    flex-basis: 100%;
+    margin-top: 0.2rem;
+}
+
+.Nota header{
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    width: 90%;
+}
+
+.Nota section, .Nota header{
+    margin: 1em 1em;
+}
+.Nota section form{
+    display: flex;
+    flex-direction: column;
+}
+
+.Nota section form :is(label,input, textarea){
+    font-size: 1.5rem;
+    margin-bottom: 0.5em;
+    width: min(90%, 50rem);
+}
+input::-webkit-calendar-picker-indicator {
+    opacity: 100%;
+  }
+#courseOverview{
+    height: 7rem;
+}
+form p{
+    margin-bottom: 1.25em;
+    display: flex;
+    flex-direction: column;
+}
+form p > select{
+    width: min(90%, 50rem);
+    padding: 0.55em 1em;
+    font-size: 1.225rem;
+}
+form p > input,
+form p > textarea{
+    padding: 0.55em 1em;
+    font-size: 1.125rem;
+} 
+#id_file{
+    padding-left: 0;
+
+}
+form button{
+    background-color: rgb(255, 167, 85);
+    width: 15rem;
+    align-self: flex-start;
+    border-radius: 20px;
+    border: none;
+    font-size: 1.25rem;
+    padding: 0.75em 1em;
+    cursor: pointer;
+}
+
+form button:hover{
+    background-color: rgb(255, 139, 31);
+}
+
+@media (max-width: 900px){
+    .answer-card{
+        width: 100%;
+    }
+}

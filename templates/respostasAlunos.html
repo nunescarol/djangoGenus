@@ -3,43 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Alunos</title>
+  <link rel="stylesheet" href="{% static 'css/respostasAlunos.css' %}">
 </head>
 <body>
-    <section>
-        <h2>Alunos</h2>
-        <ul>
-            {% for aluno in alunos %}
-                <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id post.id aluno%}">{{aluno}}</a> </li>
-            {% endfor %}
-        </ul>
-        <br>
-    </section>
-
-    <section>
-        {% if not resposta == None %}
-        <h3>Resposta de {{aluno}}: </h3>
-            {% for content in resposta %}
-                <ul>
-                    <li><a href="">{{content.item.render}}</a></li>
+    <header>
+        <div class="out-container">
+            <img src="../static/images/logo.svg" alt="Genus Logo">
+            <nav class="overlay">
+                 <ul>
+                    <li><a href="{% url 'cursos:mural' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
+                    <li><a href="">Alunos</a></li>
+                    {% if dono %}
+                        <li><a href="">Configurações</a></li>
+                    {% endif %}
                 </ul>
-            {% endfor %}
-            <br>
-            <h3>Nota:</h3>
+            </nav>
+              
+        </div>
 
-            <p>Nota atual: {{current_grade}}</p> 
+    </header>
 
-            {% block content %}
-                <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" name="arquivo" value="arquivo">Atribuir nota</button>
-                </form>
-        
-            {% endblock %}
+    <div class="content-box">
+        <h1>Alunos</h1>
+        <div class="alunos">
+            <ul class="alunos-card">
+                {% for aluno in alunos %}
+                    <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id post.id aluno%}">{{aluno}}</a> </li>
+                {% endfor %}
+            </ul>
             <br>
-        {% endif %}
-    </section>
+        </div>
+        <div class="answer">
+            {% if not resposta == None %}
+                <div class="answer-card">
+                    <div class="student-answer">
+                        <h3>Resposta de {{aluno}}: </h3>
+                        <br>
+                        {% for content in resposta %}
+                            <ul class="content-item">
+                                <!-- <li><a href="#"><img src="https://i.pinimg.com/originals/6e/83/9c/6e839cefbb2d470d923efbc94fbfd4dc.jpg" alt="nada"></a></li> -->
+                                <li><a href="">{{content.item.render}}</a></li>
+                            </ul>
+                        {% endfor %}
+                        <br>
+                    </div>
+                    <div class="Nota">
+                        <header>
+                            <h3>Nota:</h3>
+                            <p> Nota atual: <strong>{{current_grade}}</strong></p> 
+                        </header>
+                        <section>
+                            {% block content %}
+                                <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" name="arquivo" value="arquivo">Atribuir nota</button>
+                                </form>
+                        
+                            {% endblock %}
+                            <br>
+                        </section>
+                    </div>
+                </div>
+            {% endif %}
+    
+        </div>
+     
+    </div>
     
   
 </body>

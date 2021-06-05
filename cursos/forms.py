@@ -90,6 +90,12 @@ class PasswordChange(forms.Form):
     class Meta:
         fields = ['password']
 
+class PasswordConfirm(forms.Form):
+    current_password = forms.CharField(max_length=128, label="Confirme sua senha", widget=forms.PasswordInput)
+
+    class Meta:
+        fields = ['password']
+
 # class CreateActivityAdminForm(ModelForm):
 #     class Meta:
 #         model = Activity

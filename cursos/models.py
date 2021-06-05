@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from polymorphic.models import PolymorphicModel
@@ -17,6 +17,9 @@ User._meta.get_field('email').null = False
 
 # User._meta.get_field('username')._unique = True
 
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(username='Usuário não está mais entre nós')[0]
+
 class Subject(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
@@ -28,7 +31,7 @@ class Subject(models.Model):
         return self.title
 
 class Course(models.Model):
-    owner = models.ForeignKey(User,related_name='courses_created', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User,related_name='courses_created', on_delete=models.SET(get_sentinel_user))
     subject = models.ForeignKey(Subject,related_name='courses', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, default='')
@@ -67,13 +70,6 @@ class Post(Module):
 
     def __str__(self):
         return self.title
-
-# class Activity(Module):
-#     module = models.ForeignKey(Module,related_name='activities', on_delete=models.CASCADE)
-#     grade = models.FloatField(blank=True, null=True)
-
-#     def __str__(self):
-#         return self.title
 
 class Grade(models.Model):
     grade = models.DecimalField(blank=True, max_digits=4, decimal_places=2, validators=[MaxValueValidator(10)], default=None)

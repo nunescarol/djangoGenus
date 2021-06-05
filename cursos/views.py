@@ -10,7 +10,7 @@ from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.views.generic import ListView
 
-from .forms import CreateCourseForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm, GradeForm, MensagemMuralForm, PerfilForm, PasswordChange
+from .forms import CreateCourseForm, CreatePostForm, CreateModuleForm, AddFileForm, AddImageForm, EscolhaTipo, AddTextForm, AddVideoForm, CommentForm, GradeForm, MensagemMuralForm, PerfilForm, PasswordChange, PasswordConfirm
 from django.contrib.auth.models import User
 
 from .models import Course, Module, Content, Post, Comment, Grade
@@ -170,10 +170,26 @@ def mudar_senha(request):
     else:
         return redirect('/')
 
-def excluir_conta(request):
+def excluir_conta_confirm(request):
     if request.user.is_authenticated:
         u = get_object_or_404(User, id=request.user.id)
-        u.delete()
+        if request.method == 'POST':
+            form=PasswordConfirm(request.POST)
+            if form.is_valid():
+                if u.check_password(form.cleaned_data['current_password']):
+                    return excluir_conta(request, u)
+                else:
+                    message = "Não foi possível continuar com a operação"
+                    return render(request, 'excluirConta.html', {'form': PasswordConfirm()})
+        else:
+            form = PasswordConfirm()
+            return render(request, 'excluirConta.html', {'form': form})
+    else:
+        return redirect('/')
+
+def excluir_conta(request, usuario):
+    if request.user.is_authenticated:
+        usuario.delete()
     else:
        return redirect('/')
     return redirect('/')
@@ -199,12 +215,12 @@ def curso(request, curso_slug):
                 record.course = c
                 form.save()
                 print("salvou")
-                return render(request, 'homeCurso.html', {'curso':c, 'form': form})
+                return render(request, 'homeCurso.html', {'curso':c, 'form': form, 'dono':dono})
 
         else:
             print("nao entrou em POST")
             form = MensagemMuralForm()
-            return render(request, 'homeCurso.html', {'curso':c, 'form': form})
+            return render(request, 'homeCurso.html', {'curso':c, 'form': form, 'dono':dono})
 
     else:
         return redirect('/')
@@ -226,7 +242,7 @@ def modulos(request, curso_slug):
         if(request.user==c.owner):
             dono=True
 
-        return render(request, 'modulosCurso.html', {'curso':c, 'dono': dono, 'modulos': m, 'posts': p})
+        return render(request, 'modulosCurso.html', {'curso':c, 'dono': dono, 'modulos': m, 'posts': p, 'dono':dono})
     else:
         return redirect('/')
 
@@ -498,12 +514,16 @@ def teste(request):
 
 def exibir_alunos(request, curso_slug):
     if request.user.is_authenticated:
+        dono=False
+        
         try:
             c = Course.objects.get(slug=curso_slug)
         except Course.DoesNotExist:
             raise Http404("Ops, esse curso não existe")
+        if(request.user==c.owner):
+            dono=True
         alunos=c.students.all()
-        return render(request, 'alunos.html', {'curso': c, 'alunos': alunos})
+        return render(request, 'alunos.html', {'curso': c, 'alunos': alunos, 'dono':dono})
 
     else:
         return redirect('/')

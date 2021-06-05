@@ -64,7 +64,7 @@ def criar(request):
 def buscar_cursos(request):
     if request.user.is_authenticated:
         cursos = Course.objects.all()
-        cursos_paginator = Paginator(cursos, 1)
+        cursos_paginator = Paginator(cursos, 5)
         num_pagina = request.GET.get('paginas')
         paginas = cursos_paginator.get_page(num_pagina)
         
@@ -491,57 +491,6 @@ def adicionar_mensagem_mural(request, curso_slug):
         form = MensagemMuralForm()
         return render(request, 'addMensagem.html', {'curso':c, 'form': form})
 
-
-
-# def criar_post(request, curso_slug, modulo_id):
-#     if request.user.is_authenticated:
-#         dono=False
-        
-#     else:
-#         return redirect('/')
-
-
-# class ContentCreateUpdateView(TemplateResponseMixin, View):
-#     module = None
-#     model = None
-#     obj = None
-#     template_name = 'courses/manage/content/form.html'
-    
-#     def get_model(self, model_name):
-#         if model_name in ['text', 'video', 'image', 'file']:
-#             return apps.get_model(app_label='courses',model_name=model_name)
-#         return None
-    
-#     def get_form(self, model, *args, **kwargs):
-#         Form = modelform_factory(model, exclude=['owner','order','created','updated'])
-
-#         return Form(*args, **kwargs)
-    
-#     def dispatch(self, request, module_id, model_name, id=None):
-#         self.module = get_object_or_404(Module, id=module_id, course__owner=request.user)
-#         self.model = self.get_model(model_name)
-        
-#         if id:
-#             self.obj = get_object_or_404(self.model, id=id,owner=request.user)
-#         return super(ContentCreateUpdateView,self).dispatch(request, module_id, model_name, id)
-    
-#     def get(self, request, module_id, model_name, id=None):
-#         form = self.get_form(self.model, instance=self.obj)
-#         return self.render_to_response({'form': form,'object': self.obj})
-
-#     def post(self, request, module_id, model_name, id=None):
-#         form = self.get_form(self.model, instance=self.obj, data=request.POST, files=request.FILES)
-
-#         if form.is_valid():
-#             obj = form.save(commit=False)
-#             obj.owner = request.user
-#             obj.save()
-#             if not id:
-#                 # new content
-#                 Content.objects.create(module=self.module,item=obj)
-#             return redirect('module_content_list', self.module.id)
-#         return self.render_to_response({'form': form, 'object': self.obj})
-
 def teste(request):
     c = Course.objects.get(slug='teste')
     print(c.students)
@@ -628,3 +577,78 @@ def exibir_resposta_de_aluno(request, curso_slug, modulo_id, post_id, aluno):
 def teste_formnota(request):
     form = GradeForm()
     return render(request, 'testeNota.html', {'form': form})
+
+def config_curso(request, curso_slug):
+    if request.user.is_authenticated:
+        try:
+            c = Course.objects.get(slug=curso_slug)
+        except Course.DoesNotExist:
+            raise Http404("Ops, esse curso não existe")
+        alunos=c.students.all()
+        
+        if request.POST.get('delete'):
+            count=1
+            teste= request.POST.get('aluno')
+            print('remover '+teste)
+            for aluno in alunos:
+                print(count, aluno)
+                count = count + 1
+                if aluno.first_name == teste:
+                    c.students.remove(aluno.id)
+        return render(request, 'configCurso.html', {'curso': c, 'alunos': alunos})
+
+def deletar_curso(curso_slug):
+    curso_deletar = Course.objects.get(slug=curso_slug)
+    curso_deletar.delete()
+    return redirect('../../inicio')
+
+
+# eu trouxe pra baixo pra nao atrapalhar o meio - lari
+# def criar_post(request, curso_slug, modulo_id):
+#     if request.user.is_authenticated:
+#         dono=False
+        
+#     else:
+#         return redirect('/')
+
+
+# class ContentCreateUpdateView(TemplateResponseMixin, View):
+#     module = None
+#     model = None
+#     obj = None
+#     template_name = 'courses/manage/content/form.html'
+    
+#     def get_model(self, model_name):
+#         if model_name in ['text', 'video', 'image', 'file']:
+#             return apps.get_model(app_label='courses',model_name=model_name)
+#         return None
+    
+#     def get_form(self, model, *args, **kwargs):
+#         Form = modelform_factory(model, exclude=['owner','order','created','updated'])
+
+#         return Form(*args, **kwargs)
+    
+#     def dispatch(self, request, module_id, model_name, id=None):
+#         self.module = get_object_or_404(Module, id=module_id, course__owner=request.user)
+#         self.model = self.get_model(model_name)
+        
+#         if id:
+#             self.obj = get_object_or_404(self.model, id=id,owner=request.user)
+#         return super(ContentCreateUpdateView,self).dispatch(request, module_id, model_name, id)
+    
+#     def get(self, request, module_id, model_name, id=None):
+#         form = self.get_form(self.model, instance=self.obj)
+#         return self.render_to_response({'form': form,'object': self.obj})
+
+#     def post(self, request, module_id, model_name, id=None):
+#         form = self.get_form(self.model, instance=self.obj, data=request.POST, files=request.FILES)
+
+#         if form.is_valid():
+#             obj = form.save(commit=False)
+#             obj.owner = request.user
+#             obj.save()
+#             if not id:
+#                 # new content
+#                 Content.objects.create(module=self.module,item=obj)
+#             return redirect('module_content_list', self.module.id)
+#         return self.render_to_response({'form': form, 'object': self.obj})

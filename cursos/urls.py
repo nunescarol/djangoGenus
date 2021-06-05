@@ -28,6 +28,8 @@ urlpatterns = [
     path('<str:curso_slug>/mural/',views.mural, name='mural'),
     path('<str:curso_slug>/mural/adicionar-comentario/',views.adicionar_mensagem_mural, name='adicionar-mensagem'),
     
+    path('<str:curso_slug>/config/',views.config_curso, name='config_curso'),
+    path('<str:curso_slug>/config/deletar',views.deletar_curso, name='deletar_curso'),
     
     path('inicio/aaa/', views.teste_formnota, name='teste'),
     # path('<str:curso_slug>/<int:modulo_id>/criar-post/',views.criar_post, name='criar-post'),  

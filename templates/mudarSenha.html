@@ -15,14 +15,14 @@
   <nav>
     <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
     <ul>
-        <a href="#"><li><i class="far fa-user-circle"></i>Perfil</li></a> 
+        <a href="{% url 'cursos:perfil' %}"><li><i class="far fa-user-circle"></i>Perfil</li></a> 
         <a href=""><li><i class="fas fa-cog"></i> Configurações</li></a>
     </ul>
     <button class="exit-btn">SAIR</button>
     <div class="dropdown">
         <button class="dropbtn"><i class="fas fa-bars"></i></button>
         <div class="dropdown-content">
-            <a href="#"><i class="far fa-user-circle"></i>Perfil</a>
+            <a href="{% url 'cursos:perfil' %}"><i class="far fa-user-circle"></i>Perfil</a>
             <a href="#"><i class="fas fa-cog"></i>Configurações</a>
             <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
         </div>

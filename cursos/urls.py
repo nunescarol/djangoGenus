@@ -9,7 +9,8 @@ urlpatterns = [
     path('cursos/',views.buscar_cursos, name='buscar-cursos'),
     path('buscar/',views.buscar_cursos, name='buscar'),
     path('perfil/',views.perfil, name='perfil'),
-    path('perfil/excluir-conta',views.excluir_conta, name='excluir-conta'),
+    path('perfil/excluir-conta-confirm',views.excluir_conta_confirm, name='excluir-conta-confirm'),
+    # path('perfil/excluir-conta',views.excluir_conta, name='excluir-conta'),
     path('perfil/mudar-senha',views.mudar_senha, name='mudar-senha'),
     path('<str:curso_slug>/resumo/',views.resumo, name='resumo'),
     path('<str:curso_slug>/',views.curso, name='curso'),
@@ -28,6 +29,8 @@ urlpatterns = [
     path('<str:curso_slug>/mural/',views.mural, name='mural'),
     path('<str:curso_slug>/mural/adicionar-comentario/',views.adicionar_mensagem_mural, name='adicionar-mensagem'),
     
+    path('<str:curso_slug>/config/',views.config_curso, name='config_curso'),
+    path('<str:curso_slug>/config/deletar',views.deletar_curso, name='deletar_curso'),
     
     path('inicio/aaa/', views.teste_formnota, name='teste'),
     # path('<str:curso_slug>/<int:modulo_id>/criar-post/',views.criar_post, name='criar-post'),  

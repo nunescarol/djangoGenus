@@ -13,11 +13,11 @@
             <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
             <nav class="overlay">
                  <ul>
-                    <li><a href="{% url 'cursos:mural' curso.slug%}">Mural</a></li>
+                    <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
                     <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
-                    <li><a href="">Alunos</a></li>
+                    <li><a href="{% url 'cursos:exibir-alunos' curso.slug %}">Alunos</a></li>
                     {% if dono %}
-                        <li><a href="">Configurações</a></li>
+                        <li><a href="{% url 'cursos:config_curso' curso.slug %}">Configurações</a></li>
                     {% endif %}
                 </ul>
             </nav>

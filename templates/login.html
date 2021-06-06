@@ -1,6 +1,5 @@
 {% load static %}
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -23,9 +22,9 @@
       <form method="post">
         {% csrf_token %}
         <h1>Log in</h1>
-        <label for="username">Username: </label>
+        <label for="username">Nome de usuário: </label>
         <input id="username" type="text" name="username">
-        <label for="password">Password: </label>
+        <label for="password">Senha: </label>
         <input id="password" type="password" name="password">
         <button type="submit">Log In</button>
         <p>Realizar <a href="{% url 'registro:cadastro' %}">cadastro</a></p>

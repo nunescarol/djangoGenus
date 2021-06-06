@@ -14,10 +14,11 @@
     <header>
         <div class="out-container">
             <div class="out-header">
-                <h2>{{curso.title}}</h2>
                 <div class="brand-img">
-                    <img src="../static/images/logo.svg" alt="Genus Logo">
+                    <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
                 </div>
+                <h2>{{curso.title}}</h2>
+                
                 <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2>
 
             </div>
@@ -34,7 +35,7 @@
 
     </header>
     <div class="container">
-        <div>
+        <!-- <div>
            
 
             <h1>{{curso.title}}</h1>
@@ -50,10 +51,28 @@
             <input type="submit" name="delete" value="Deletar usuários selecionados">
             </form>
                             
-            <a href="{% url 'cursos:deletar_curso' curso.slug %}">deletar curso</a>
+            <a href="{% url 'cursos:deletar_curso' curso.slug %}">Deletar curso</a>
             </ul>
+        </div> -->
+        <div class="alunos-config">
+            <h1>{{curso.title}}</h1>
+            <h2>Alunos</h2>
+            <form method="POST" action="">
+
+                <ul class="lista-alunos">
+                    {% for aluno in alunos %}
+                    <li>
+                        <input type="checkbox" name="aluno" value="{{aluno}}">
+                        <a href="#">{{aluno}}</a><br/>
+                    </li>
+                    {% endfor %}
+                    {% csrf_token %}
+                </ul>
+                <input type="submit" name="delete" value="Deletar usuários selecionados">
+            </form>
+                               
+            <a href="{% url 'cursos:deletar_curso' curso.slug %}">Deletar curso</a>
         </div>
-        
     </div>
     
         

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
 </head>
 <body>
   <nav>
-    <img src="../../static/images/logo.svg" alt="Genus Logo">
+    <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
     <ul>
         <a href="{% url 'cursos:perfil' %}"><li><i class="far fa-user-circle"></i>Perfil</li></a> 
         <a href=""><li><i class="fas fa-cog"></i> Configurações</li></a>

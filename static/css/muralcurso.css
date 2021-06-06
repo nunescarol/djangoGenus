@@ -74,7 +74,7 @@ h1{
 }
 .out-container img{
     position: relative;
-    height: 4.5em;
+    height: 3.25em;
 }
 
 .overlay{
@@ -90,6 +90,7 @@ h1{
     display: flex;
     flex-direction: row;
     list-style: none;
+    padding: 0;
 }
 .overlay ul li a{
     color: rgb(84, 6, 158);
@@ -218,7 +219,48 @@ h1{
 .info span{
    margin-bottom: 5px;
 }
+/*configCurso.html*/
+.lista-alunos{
+    list-style: none;
+    margin-bottom: 1.5em;
+}
+.lista-alunos li{
+    font-size: 1.25rem;
+    margin-top: 1em;
+}
+.lista-alunos a{
+    text-decoration: none;
+    cursor: unset;
+    color: #000;
+}
+.lista-alunos a:visited{
+    color: #000;
+}
+.alunos-config form{
+    margin-bottom: 1.5em;
+}
+.alunos-config form > input{
+    font-size: 1rem;
+    margin-top: 2em;
+    background-color: red;
+    color: #FFF;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 00.75em 2em;
+    border-radius: 20px;
+    border: none;
+}
+.alunos-config > a{
+    font-size: 1rem;
+    margin-top: 2em;
+    background-color: red;
+    color: #FFF;
+    text-decoration: none;
 
+    padding: 00.75em 2em;
+    border-radius: 20px;
+}
+/*------------------------------*/
 /*reponsive*/
 @media (max-width: 768px){
     header{

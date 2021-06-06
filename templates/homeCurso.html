@@ -33,12 +33,16 @@
     <header>
         <div class="out-container">
             <div class="out-header">
-                <h2>{{curso.title}}</h2>
+                <!-- <h2>{{curso.title}}</h2>
                 <div class="brand-img">
                     <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
                 </div>
+                <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2> -->
+                <div class="brand-img">
+                    <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
+                </div>
+                <h2>{{curso.title}}</h2>
                 <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2>
-
             </div>
             <nav class="overlay">
                  <ul>
@@ -132,7 +136,7 @@
         </div>
     </div>
 
- <a href="{% url 'registro:check' %}">check</a>
+ <!-- <a href="{% url 'registro:check' %}">check</a> -->
 <body>
 
 </body>

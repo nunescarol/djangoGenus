@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +10,8 @@
 <body>
     <header>
         <div class="out-container">
-            <img src="../static/images/logo.svg" alt="Genus Logo">
-            <nav class="overlay">
+            <a href="{% url 'cursos:inicio' %}" style="align-self: center;"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
+            <nav class="overlay" >
                  <ul>
                     <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
                     <li><a href="{% url 'cursos:modulos' curso.slug %}">Módulos e atividades</a></li>
@@ -51,8 +52,8 @@
                     </div>
                     <div class="Nota">
                         <header>
-                            <h3>Nota:</h3>
-                            <p> Nota atual: <strong>{{current_grade}}</strong></p> 
+                            <h3>Nota: </h3>
+                            <p><strong>{{current_grade}}</strong></p> 
                         </header>
                         <section>
                             {% block content %}

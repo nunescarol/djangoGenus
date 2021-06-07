@@ -352,6 +352,7 @@ def criar_atividade(request, curso_slug, modulo_id):
 def exibir_post(request, curso_slug, modulo_id, post_id):
     if request.user.is_authenticated:
         dono=False
+        g="--"
         try:
             c = Course.objects.get(slug=curso_slug)
             m = Module.objects.get(pk=modulo_id)
@@ -360,10 +361,14 @@ def exibir_post(request, curso_slug, modulo_id, post_id):
             raise Http404("Ops, esse curso não existe")
         except Module.DoesNotExist:
             raise Http404("Ops, esse módulo ou conteudo não existe")
-        print(p.isActivity)
             
         if request.user==c.owner:
             dono=True
+        else:
+            try:
+                g = Grade.objects.get(student=request.user.id)
+            except Grade.DoesNotExist:
+                g="--"
         
         content = Content.objects.filter(module=p)
         content_modulo=[]
@@ -378,7 +383,7 @@ def exibir_post(request, curso_slug, modulo_id, post_id):
                     if cont.item.owner==request.user:
                         own_resposta.append(cont)
         if(p.isActivity==True):
-            return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'post': p, 'contents_modulo': content_modulo, 'respostas_estudantes':content_estudantes, 'respostas': own_resposta})
+            return render(request, 'atividade.html', {'curso':c, 'dono': dono, 'modulo': m, 'post': p, 'contents_modulo': content_modulo, 'respostas_estudantes':content_estudantes, 'respostas': own_resposta, "grade":g})
         return render(request, 'post.html', {'curso':c, 'dono': dono, 'modulo': m, 'post': p, 'contents_modulo': content_modulo})
        
 

@@ -11,7 +11,7 @@
 <body>
     <header>
         <div class="out-container">
-            <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
+            <a href="{% url 'cursos:inicio' %}" style="align-self: center;"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
             <nav class="overlay">
                  <ul>
                     <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
@@ -28,6 +28,7 @@
     </header>
         
     <div class="content-box">
+        <a href="#" class="back-button"><i class="fas fa-chevron-circle-left"></i>Voltar</a>
         <h1>{{curso.title}}</h1>
 
         <h1>Módulos e atividades</h1>

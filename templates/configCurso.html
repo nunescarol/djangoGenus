@@ -15,7 +15,7 @@
         <div class="out-container">
             <div class="out-header">
                 <div class="brand-img">
-                    <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
+                    <a href="{% url 'cursos:inicio' %}"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
                 </div>
                 <h2>{{curso.title}}</h2>
                 
@@ -54,7 +54,9 @@
             <a href="{% url 'cursos:deletar_curso' curso.slug %}">Deletar curso</a>
             </ul>
         </div> -->
+        <a href="#" class="back-button"><i class="fas fa-chevron-circle-left"></i>Voltar</a>
         <div class="alunos-config">
+            
             <h1>{{curso.title}}</h1>
             <h2>Alunos</h2>
             <form method="POST" action="">

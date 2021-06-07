@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav>
-        <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
+        <a href="{% url 'cursos:inicio' %}"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
         <ul>
             <a href="{% url 'cursos:perfil' %}"><li><i class="far fa-user-circle"></i>Perfil</li></a>
             <li><i class="fas fa-cog"></i><a href=""> Configurações</a></li>

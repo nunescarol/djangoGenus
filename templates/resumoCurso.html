@@ -20,13 +20,13 @@
                     <li><i class="fas fa-cog"></i> Configurações</li>
                 </a>
             </ul>
-            <button class="exit-btn">SAIR</button>
+            <button class="exit-btn" onclick="location.href='{% url 'registro:logout' %}'"> SAIR </button>
             <div class="dropdown">
                 <button class="dropbtn"><i class="fas fa-bars"></i></button>
                 <div class="dropdown-content">
                     <a href="{% url 'cursos:perfil' %}"><i class="far fa-user-circle"></i>Perfil</a>
                     <a href="#"><i class="fas fa-cog"></i>Configurações</a>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+                    <a href="{% url 'registro:logout' %}"><i class="fas fa-sign-out-alt"></i>Sair</a>
                 </div>
             </div>
 

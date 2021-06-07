@@ -114,6 +114,23 @@ h1{
     align-items: center;
     margin-top: 2em;
 }
+
+.back-button{
+    margin-right: auto;
+    margin-left: 2em;
+    color: #FFF;
+    background-color: rgb(187, 107, 217);
+    font-size: 1.25rem;
+    padding: 0.75em 1em;
+    border-radius: 20px;
+    text-decoration: none;
+}
+.back-button:hover{
+    background-color: rgb(101, 37, 124);
+}
+.back-button > i{
+    margin-right: 0.5em;
+}
 .muralimg{
     border-radius: 10px;
     width: 80%;
@@ -220,6 +237,7 @@ h1{
    margin-bottom: 5px;
 }
 /*configCurso.html*/
+
 .lista-alunos{
     list-style: none;
     margin-bottom: 1.5em;
@@ -259,6 +277,22 @@ h1{
 
     padding: 00.75em 2em;
     border-radius: 20px;
+}
+.back-button{
+    margin-right: auto;
+    margin-left: 2em;
+    color: #FFF;
+    background-color: rgb(187, 107, 217);
+    font-size: 1.25rem;
+    padding: 0.75em 1em;
+    border-radius: 20px;
+    text-decoration: none;
+}
+.back-button:hover{
+    background-color: rgb(101, 37, 124);
+}
+.back-button > i{
+    margin-right: 0.5em;
 }
 /*------------------------------*/
 /*reponsive*/

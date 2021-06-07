@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/stylemodulo.css' %}">
+    <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
     <title>Genus</title>
 </head>
 <body>
     <header>
         <div class="out-container">
-            <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
+            <a href="{% url 'cursos:inicio' %}" style="align-self: center;"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
             <nav class="overlay">
                  <ul>
                     <li><a href="{% url 'cursos:curso' curso.slug%}">Mural</a></li>
@@ -27,7 +28,7 @@
     </header>
 
     <div class="content-box">
-
+        <a href="#" class="back-button"><i class="fas fa-chevron-circle-left"></i>Voltar</a>
         <h1>{{curso.title}}</h1>
 
         <section class="modulo">

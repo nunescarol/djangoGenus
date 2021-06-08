@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'embed_video'
+    'embed_video',
+    'polymorphic'
 ]
 
 MIDDLEWARE = [

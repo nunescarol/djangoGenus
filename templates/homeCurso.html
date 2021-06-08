@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/muralcurso.css' %}">
-    <title>Document</title>
+    <title>Genus</title>
     <!-- Imports -->
     <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
 
@@ -27,22 +27,14 @@
         }
     </script>
 
-    <!-- <h1>{{curso.title}}</h1>
-    <a href="{% url 'cursos:criar-modulo' curso.slug %}">teste formulario</a> -->
 
     <header>
         <div class="out-container">
             <div class="out-header">
-                <!-- <h2>{{curso.title}}</h2>
-                <div class="brand-img">
-                    <img src="{% static 'images/logo.svg' %}" alt="Genus Logo">
-                </div>
-                <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2> -->
                 <div class="brand-img">
                     <a href="{% url 'cursos:inicio' %}"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
                 </div>
                 <h2>{{curso.title}}</h2>
-                <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2>
             </div>
             <nav class="overlay">
                  <ul>
@@ -58,15 +50,8 @@
         </div>
 
     </header>
-    <!-- <h2>Mural</h2>
-    <div class="content-container">
-    
-        <h2>Mural</h2>
-        <hr>
-    </div> -->
   
     <div class="container">
-        <a href="#" class="back-button"><i class="fas fa-chevron-circle-left"></i>Voltar</a>
         <div class="muralimg">
             <h1>{{curso.title}}</h1>
         </div>
@@ -80,11 +65,6 @@
                 </form>
                 {% endblock %}  
                     
-                        
-                   <!-- <div class="groupbtn" id="group1">
-                        <button type="submit" onclick="adicionar_mensagem_mural()">Postar</button>
-                       <button type="button" onclick="cancelMessage()"> Cancelar</button>
-                   </div> -->
                </form>
             </div>
             {% for mensagem in curso.mensagens.all %}
@@ -104,40 +84,9 @@
                 </div>
             </div> 
             {% endfor %}
-            <!-- <div class="card">
-                <div class="card-header">
-                    <h1><i class="far fa-user fa-sm"></i></h1>
-                    <div class="info">
-                        <div class="infoUser">
-                            <span><b>User Name</b></span>
-                            <span><b><i>18/05/2021</i> </b> </span>
-                        </div>
-                        <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p>Notas no siga</p>
-                </div>
-            </div> 
-            <div class="card">
-                <div class="card-header">
-                    <h1><i class="far fa-user fa-sm"></i></h1>
-                    <div class="info">
-                        <div class="infoUser">
-                            <span><b>User Name</b></span>
-                            <span><b><i>18/05/2021</i> </b> </span>
-                        </div>
-                        <a href="#"><i class="fas fa-ellipsis-v fa-lg"></i></a>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <p>Notas no siga</p>
-                </div>
-            </div>  -->
         </div>
     </div>
 
- <!-- <a href="{% url 'registro:check' %}">check</a> -->
 <body>
 
 </body>

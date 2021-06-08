@@ -1,7 +1,0 @@
-jorge: tela index e inicio
-
-henrique: tela login e modulo
-
-carol: ultimo: recuperação de senha
-
-lari: ultimo: pagination (ta faltando dar push)

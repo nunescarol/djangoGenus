@@ -128,4 +128,7 @@ button{
     flex-direction: column;
 }
 
-
+a:visited{
+    text-decoration: none;
+    color: #0921f8;
+}

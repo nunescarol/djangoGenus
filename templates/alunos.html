@@ -28,7 +28,6 @@
     </header>
 
     <div class="content-box">
-        <a href="#" class="back-button"><i class="fas fa-chevron-circle-left"></i>Voltar</a>
         <h1>{{curso.title}}</h1>
 
         <section class="modulo">
@@ -44,9 +43,13 @@
                 <div class="atividades">
                         <h2>Alunos</h2>
                         <ul>
-                            {% for aluno in alunos %}
-                                <li><a href="mailto: aluno.email">{{aluno}}</a> </li>
-                            {% endfor %}
+                            {% if alunos %}
+                                {% for aluno in alunos %}
+                                    <li><a href="mailto: {{aluno.email}}">{{aluno}}</a> </li>
+                                {% endfor %}
+                            {% else %}
+                                <p>Esse curso ainda não tem alunos.</p>
+                            {% endif %}
                         </ul>
                 </div>
             </div>
@@ -54,8 +57,6 @@
         </section>
         
     </div>
-
-    <!-- <a href="{% url 'registro:check' %}">check</a> -->
 
 </body>
 </html>

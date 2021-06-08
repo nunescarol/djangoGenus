@@ -30,9 +30,13 @@
         <h1>Alunos</h1>
         <div class="alunos">
             <ul class="alunos-card">
-                {% for aluno in alunos %}
-                    <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id post.id aluno%}">{{aluno}}</a> </li>
-                {% endfor %}
+                {% if alunos %}
+                    {% for aluno in alunos %}
+                        <li><a href="{% url 'cursos:exibir-resp-aluno' curso.slug modulo.id post.id aluno%}">{{aluno}}</a> </li>
+                    {% endfor %}
+                {% else %}
+                    <p>O curso ainda não tem alunos</p>
+                {% endif %}
             </ul>
             <br>
         </div>
@@ -44,7 +48,7 @@
                         <br>
                         {% for content in resposta %}
                             <ul class="content-item">
-                                <!-- <li><a href="#"><img src="https://i.pinimg.com/originals/6e/83/9c/6e839cefbb2d470d923efbc94fbfd4dc.jpg" alt="nada"></a></li> -->
+                            
                                 <li><a href="">{{content.item.render}}</a></li>
                             </ul>
                         {% endfor %}

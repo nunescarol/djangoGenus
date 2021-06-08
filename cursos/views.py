@@ -75,7 +75,6 @@ def buscar_cursos(request):
             cursos_paginator = Paginator(cursos, 1)
             num_pagina = request.GET.get('paginas')
             paginas = cursos_paginator.get_page(num_pagina)
-            print(cursos)
             return render(request, 'buscarCursos.html', {'cursos': cursos, 'paginas': paginas, 'search': search})
         
         return render(request, 'buscarCursos.html', {'cursos': cursos, 'paginas': paginas,})
@@ -94,18 +93,13 @@ def resumo(request, curso_slug):
             form = InscricaoCurso(request.POST)
 
             if form.is_valid():
-                print('antes: '+str(c)+'-'+str(c.students.all()))
-                print(request.user)
                 c.students.add(request.user)
                 c.save()
-                print('depois: '+str(c)+'-'+str(c.students.all()))
                 return redirect('/genus/'+curso_slug+'/')
             else:
                 #handle invalid form
                 return redirect('/genus/'+curso_slug+'/resumo/')
         else:
-            print(request.user)
-            print(c.owner)
             form = None
             if ((not request.user in c.students.all()) and (request.user != c.owner)):
                 form = InscricaoCurso(initial={'course':c})
@@ -122,18 +116,16 @@ def perfil(request):
         
         if request.method == 'POST':
             form = PerfilForm(request.POST)
-            print(form.errors)
             if form.is_valid():
                 if u.username != form.cleaned_data['username']:
                    u.username = form.cleaned_data['username']
                 if u.first_name != form.cleaned_data['first_name']:
-                   print(form.cleaned_data)
                    u.first_name = form.cleaned_data['first_name']
                 if u.last_name != form.cleaned_data['last_name']:
                    u.last_name = form.cleaned_data['last_name']
                 u.save()
             else:
-                print("teste")               
+                pass             
             return redirect('/genus/perfil/')
             
         else:
@@ -155,14 +147,11 @@ def mudar_senha(request):
                 if form.cleaned_data['new_password1']!=form.cleaned_data['new_password1']:
                     message="O campo de confirmação de senha deve coincidir com a nova senha fornecida"
                 else:
-                    print(form.cleaned_data['current_password'])
-                    print(u.check_password(form.cleaned_data['current_password']))
                     if u.check_password(form.cleaned_data['current_password']):
                         u.set_password(form.cleaned_data['new_password1'])
                         u.save()
                     else:
                         message="Senha incorreta"
-            print(message)
             return redirect('/genus/perfil/')
         else:
             form = PasswordChange()
@@ -207,18 +196,15 @@ def curso(request, curso_slug):
             dono=True
         if request.method == 'POST':
             form = MensagemMuralForm(request.POST)
-            print(request.POST)
                 
             if form.is_valid():
                 record = form.save(commit=False)
                 record.author = request.user
                 record.course = c
                 form.save()
-                print("salvou")
                 return render(request, 'homeCurso.html', {'curso':c, 'form': form, 'dono':dono})
 
         else:
-            print("nao entrou em POST")
             form = MensagemMuralForm()
             return render(request, 'homeCurso.html', {'curso':c, 'form': form, 'dono':dono})
 
@@ -264,7 +250,6 @@ def criar_modulo(request, curso_slug):
                 form = CreateModuleForm()
                 return render(request, 'createModule.html', {'form': form})
         else:
-            print("Você não tem permissão para criar um módulo nesse curso")
             return redirect('/genus/'+curso_slug)
     else:
         return redirect('/')
@@ -316,7 +301,6 @@ def criar_post(request, curso_slug, modulo_id):
                 form = CreatePostForm()
             return render(request, 'createPost.html', {'form': form, 'isActivity':False})
         else:
-            print("opaopa")
             return redirect('/genus/inicio/')
 
 def criar_atividade(request, curso_slug, modulo_id):
@@ -346,7 +330,6 @@ def criar_atividade(request, curso_slug, modulo_id):
                 form = CreatePostForm()
             return render(request, 'createPost.html', {'form': form, 'isActivity':True})
         else:
-            print("opaopa")
             return redirect('/genus/inicio/')
 
 def exibir_post(request, curso_slug, modulo_id, post_id):
@@ -497,25 +480,17 @@ def adicionar_mensagem_mural(request, curso_slug):
     
     if request.method == 'POST':
         form = MensagemMuralForm(request.POST)
-        print(request.POST)
             
         if form.is_valid():
             record = form.save(commit=False)
             record.author = request.user
             record.course = c
             form.save()
-            print("salvou")
             return redirect('/genus/'+curso_slug+'/mural/')
 
     else:
-        print("nao entrou em POST")
         form = MensagemMuralForm()
         return render(request, 'addMensagem.html', {'curso':c, 'form': form})
-
-def teste(request):
-    c = Course.objects.get(slug='teste')
-    print(c.students)
-    return redirect('/')
 
 def exibir_alunos(request, curso_slug):
     if request.user.is_authenticated:
@@ -535,6 +510,7 @@ def exibir_alunos(request, curso_slug):
 
 def exibir_respostas(request, curso_slug, modulo_id, post_id):
     if request.user.is_authenticated:
+        dono=False
         try:
             c = Course.objects.get(slug=curso_slug)
             m = Module.objects.get(pk=modulo_id)
@@ -543,9 +519,11 @@ def exibir_respostas(request, curso_slug, modulo_id, post_id):
             raise Http404("Ops, esse curso não existe")
         except Module.DoesNotExist:
             raise Http404("Ops, esse módulo ou conteudo não existe")
+        if(request.user==c.owner):
+            dono=True
 
         alunos=c.students.all()
-        return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'post': p,'alunos': alunos, 'resposta': None})
+        return render(request, 'respostasAlunos.html', {'curso':c,'modulo': m,'post': p,'alunos': alunos, 'resposta': None, 'dono':dono})
     else:
         return redirect('/')
 
@@ -599,10 +577,6 @@ def exibir_resposta_de_aluno(request, curso_slug, modulo_id, post_id, aluno):
     else:
         return redirect('/')
 
-def teste_formnota(request):
-    form = GradeForm()
-    return render(request, 'testeNota.html', {'form': form})
-
 def config_curso(request, curso_slug):
     if request.user.is_authenticated:
         try:
@@ -612,12 +586,8 @@ def config_curso(request, curso_slug):
         alunos=c.students.all()
         
         if request.POST.get('delete'):
-            count=1
             teste= request.POST.get('aluno')
-            print('remover '+teste)
             for aluno in alunos:
-                print(count, aluno)
-                count = count + 1
                 if aluno.first_name == teste:
                     c.students.remove(aluno.id)
         return render(request, 'configCurso.html', {'curso': c, 'alunos': alunos})

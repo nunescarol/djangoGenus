@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/muralcurso.css' %}">
-    <title>Document</title>
+    <title>Genus</title>
     <!-- Imports -->
     <script src="https://kit.fontawesome.com/168c8af039.js" crossorigin="anonymous"></script>
 
@@ -18,8 +18,7 @@
                     <a href="{% url 'cursos:inicio' %}"><img src="{% static 'images/logo.svg' %}" alt="Genus Logo"></a>
                 </div>
                 <h2>{{curso.title}}</h2>
-                
-                <h2><i id="perfil" class="far fa-user fa-lg"><a href="#"> </a></i></h2>
+            
 
             </div>
             <nav class="overlay">
@@ -35,26 +34,6 @@
 
     </header>
     <div class="container">
-        <!-- <div>
-           
-
-            <h1>{{curso.title}}</h1>
-            <h2>Alunos</h2>
-             <ul>
-            <form method="POST" action="">
-             {% for aluno in alunos %}
-            <input type="checkbox" name="aluno" value="{{aluno}}">
-            <a href="#">{{aluno}}</a><br/>
-            {% endfor %}
-            
-            {% csrf_token %}
-            <input type="submit" name="delete" value="Deletar usuários selecionados">
-            </form>
-                            
-            <a href="{% url 'cursos:deletar_curso' curso.slug %}">Deletar curso</a>
-            </ul>
-        </div> -->
-        <a href="#" class="back-button"><i class="fas fa-chevron-circle-left"></i>Voltar</a>
         <div class="alunos-config">
             
             <h1>{{curso.title}}</h1>
@@ -62,12 +41,16 @@
             <form method="POST" action="">
 
                 <ul class="lista-alunos">
-                    {% for aluno in alunos %}
-                    <li>
-                        <input type="checkbox" name="aluno" value="{{aluno}}">
-                        <a href="#">{{aluno}}</a><br/>
-                    </li>
-                    {% endfor %}
+                    {% if alunos %}
+                        {% for aluno in alunos %}
+                        <li>
+                            <input type="checkbox" name="aluno" value="{{aluno}}">
+                            <a href="#">{{aluno}}</a><br/>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <p>O curso ainda não tem alunos</p>
+                    {% endif %}
                     {% csrf_token %}
                 </ul>
                 <input type="submit" name="delete" value="Deletar usuários selecionados">
